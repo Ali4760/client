@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="ALE Review Robot - Order Management">
+  <title>ALE - Orders</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="orders">
+<div class="app-container">
+
+  <div class="page-header">
+    <span class="title">Order</span>
+  </div>
+
+  <!-- Task Stats -->
+  <div class="task-content">
+    <div class="taskNum">Currently complete / Overall task</div>
+    <div class="task-detail">15/40</div>
+  </div>
+
+  <!-- Order Tabs -->
+  <div class="order-btn">
+    <div class="active" data-tab="undone" onclick="switchTab(this)">Undone</div>
+    <div data-tab="finish" onclick="switchTab(this)">Finish</div>
+  </div>
+
+  <!-- Undone Orders -->
+  <div class="order-section" data-section="undone">
+    <div class="order-card" onclick="openDialog('orderDialog')">
+      <div class="order-card__header">
+        <div class="order-card__title">
+          <div class="order-card__title-text">Louis Vuitton 2021 pre-owned Spring OnTheGo PM tote bag</div>
+          <div class="order-card__summary">
+            <div class="order-card__price">$15,171,300.00</div>
+            <div class="order-card__quantity">x3746</div>
+          </div>
+        </div>
+        <div class="order-card__media">
+          <div class="order-card__image" style="background:var(--bg-input);display:flex;align-items:center;justify-content:center;font-size:24px;">🛍️</div>
+        </div>
+      </div>
+      <div class="order-card__divider"></div>
+      <div class="order-card__details">
+        <div class="detail-row"><span>Amount</span><span>15,171,300.00</span></div>
+        <div class="detail-row"><span>Expected return</span><span class="highlight">91,027.80</span></div>
+        <div class="detail-row"><span>Current task number</span><span>1</span></div>
+        <div class="detail-row"><span>Transaction hour</span><span>2025-11-08 00:30:53</span></div>
+      </div>
+    </div>
+
+    <div class="order-card">
+      <div class="order-card__header">
+        <div class="order-card__title">
+          <div class="order-card__title-text">Apple MacBook Pro 16-inch M3 Max Chip Laptop</div>
+          <div class="order-card__summary">
+            <div class="order-card__price">$3,499.00</div>
+            <div class="order-card__quantity">x120</div>
+          </div>
+        </div>
+        <div class="order-card__media">
+          <div class="order-card__image" style="background:var(--bg-input);display:flex;align-items:center;justify-content:center;font-size:24px;">💻</div>
+        </div>
+      </div>
+      <div class="order-card__divider"></div>
+      <div class="order-card__details">
+        <div class="detail-row"><span>Amount</span><span>419,880.00</span></div>
+        <div class="detail-row"><span>Expected return</span><span class="highlight">2,519.28</span></div>
+        <div class="detail-row"><span>Current task number</span><span>2</span></div>
+        <div class="detail-row"><span>Transaction hour</span><span>2025-11-08 01:15:22</span></div>
+      </div>
+    </div>
+
+    <div class="order-card">
+      <div class="order-card__header">
+        <div class="order-card__title">
+          <div class="order-card__title-text">Samsung Galaxy S24 Ultra 512GB Titanium</div>
+          <div class="order-card__summary">
+            <div class="order-card__price">$1,419.99</div>
+            <div class="order-card__quantity">x85</div>
+          </div>
+        </div>
+        <div class="order-card__media">
+          <div class="order-card__image" style="background:var(--bg-input);display:flex;align-items:center;justify-content:center;font-size:24px;">📱</div>
+        </div>
+      </div>
+      <div class="order-card__divider"></div>
+      <div class="order-card__details">
+        <div class="detail-row"><span>Amount</span><span>120,699.15</span></div>
+        <div class="detail-row"><span>Expected return</span><span class="highlight">724.19</span></div>
+        <div class="detail-row"><span>Current task number</span><span>3</span></div>
+        <div class="detail-row"><span>Transaction hour</span><span>2025-11-08 02:05:11</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Finished Orders (hidden by default) -->
+  <div class="order-section" data-section="finish" style="display:none;">
+    <div style="padding:12px 16px;">
+      <span class="tip-red" style="padding:0;">Only showing orders from the last 3 days</span>
+    </div>
+    <div class="order-card">
+      <div class="order-card__header">
+        <div class="order-card__title">
+          <div class="order-card__title-text">Nike Air Max 270 React Running Shoes</div>
+          <div class="order-card__summary">
+            <div class="order-card__price">$150.00</div>
+            <div class="order-card__quantity">x500</div>
+          </div>
+        </div>
+        <div class="order-card__media">
+          <div class="order-card__image" style="background:var(--bg-input);display:flex;align-items:center;justify-content:center;font-size:24px;">👟</div>
+        </div>
+      </div>
+      <div class="order-card__divider"></div>
+      <div class="order-card__details">
+        <div class="detail-row"><span>Amount</span><span>75,000.00</span></div>
+        <div class="detail-row"><span>Expected return</span><span class="highlight">450.00</span></div>
+        <div class="detail-row"><span>Current task number</span><span>1</span></div>
+        <div class="detail-row"><span>Transaction hour</span><span>2025-11-07 14:20:33</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Order Detail Dialog -->
+<div class="dialog-overlay" id="orderDialog">
+  <div class="dialog-box">
+    <div class="dialog-title">Order Details</div>
+    <div class="dialog-body" style="text-align:left;">
+      <div class="detail-row"><span>Amount</span><span>15,171,300.00</span></div>
+      <div class="detail-row"><span>Expected return</span><span class="highlight">91,027.80</span></div>
+      <div class="detail-row"><span>Current task number</span><span>1</span></div>
+      <div class="detail-row"><span>Transaction hour</span><span>2025-11-08 00:30:53</span></div>
+    </div>
+    <div class="dialog-actions">
+      <button class="btn btn-cancel" onclick="closeDialog('orderDialog')">Cancel</button>
+      <button class="btn btn-confirm" onclick="closeDialog('orderDialog')">Start trading</button>
+    </div>
+  </div>
+</div>
+
+<!-- Bottom Navigation -->
+<nav class="bottom-nav">
+  <a href="home.html" class="nav-item" data-page="home"><span class="nav-icon">🏠</span><span>Index</span></a>
+  <a href="orders.html" class="nav-item" data-page="orders"><span class="nav-icon">📋</span><span>Order</span></a>
+  <a href="recharge.html" class="nav-item" data-page="recharge"><span class="nav-icon">💰</span><span>Recharge</span></a>
+  <a href="promotion.html" class="nav-item" data-page="promotion"><span class="nav-icon">📢</span><span>Promotion</span></a>
+  <a href="trade.html" class="nav-item" data-page="trade"><span class="nav-icon">💼</span><span>Trade</span></a>
+  <a href="team.html" class="nav-item" data-page="team"><span class="nav-icon">👥</span><span>Team</span></a>
+  <a href="profile.html" class="nav-item" data-page="profile"><span class="nav-icon">👤</span><span>Personal</span></a>
+</nav>
+
+<script src="js/app.js"></script>
+<script>
+function switchTab(el) {
+  document.querySelectorAll('.order-btn > div').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  const target = el.dataset.tab;
+  document.querySelectorAll('.order-section').forEach(s => {
+    s.style.display = s.dataset.section === target ? 'block' : 'none';
+  });
+}
+</script>
+</body>
+</html>

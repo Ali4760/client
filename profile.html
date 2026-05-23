@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ALE - Personal</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="profile">
+<div class="app-container">
+  
+  <div class="profile-header">
+    <div class="avatar-section">
+      <div class="avatar">U</div>
+    </div>
+    <div class="user-name">User123</div>
+    <div class="user-id">ID: 987654321 | Invitation code: ABCDEF</div>
+  </div>
+
+  <div class="balance-card">
+    <div class="balance-label">Balance</div>
+    <div class="balance-value">4,250.00<span class="balance-unit">USDT</span></div>
+    
+    <div style="display:flex;gap:12px;margin-top:16px;">
+      <a href="recharge.html" class="btn-primary" style="flex:1;text-decoration:none;display:inline-block;">Recharge</a>
+      <a href="withdraw.html" class="btn-primary" style="flex:1;text-decoration:none;display:inline-block;background:var(--bg-input);">Withdraw</a>
+    </div>
+  </div>
+
+  <div class="credit-section">
+    <div class="credit-bar">
+      <span class="credit-label">Credit Reputation</span>
+      <div class="credit-progress">
+        <div class="credit-fill" style="width:100%;"></div>
+      </div>
+      <span class="credit-value">100%</span>
+    </div>
+  </div>
+
+  <div class="menu-list">
+    <div class="menu-group">
+      <a href="userinfo.html" class="menu-item">
+        <div class="menu-left">
+          <span class="menu-icon">👤</span>
+          <span class="menu-text">Personal information</span>
+        </div>
+        <span class="menu-arrow">▶</span>
+      </a>
+      <a href="financial.html" class="menu-item">
+        <div class="menu-left">
+          <span class="menu-icon">💳</span>
+          <span class="menu-text">Capital details</span>
+        </div>
+        <span class="menu-arrow">▶</span>
+      </a>
+    </div>
+
+    <div class="menu-group">
+      <a href="recharge-record.html" class="menu-item">
+        <div class="menu-left">
+          <span class="menu-icon">📥</span>
+          <span class="menu-text">Recharge record</span>
+        </div>
+        <span class="menu-arrow">▶</span>
+      </a>
+      <a href="withdraw-record.html" class="menu-item">
+        <div class="menu-left">
+          <span class="menu-icon">📤</span>
+          <span class="menu-text">Withdrawals record</span>
+        </div>
+        <span class="menu-arrow">▶</span>
+      </a>
+    </div>
+
+    <div class="menu-group">
+      <a href="invite.html" class="menu-item">
+        <div class="menu-left">
+          <span class="menu-icon">🤝</span>
+          <span class="menu-text">Invite friends</span>
+        </div>
+        <span class="menu-arrow">▶</span>
+      </a>
+    </div>
+  </div>
+
+  <button class="signout-btn" onclick="openDialog('signOutDialog')">Sign out</button>
+
+</div>
+
+<!-- Sign Out Dialog -->
+<div class="dialog-overlay" id="signOutDialog">
+  <div class="dialog-box">
+    <div class="dialog-title">System Notice</div>
+    <div class="dialog-body">Are you sure you want to exit?</div>
+    <div class="dialog-actions">
+      <button class="btn btn-cancel" onclick="closeDialog('signOutDialog')">Cancel</button>
+      <button class="btn btn-confirm" onclick="window.location.href='login.html'">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<nav class="bottom-nav">
+  <a href="home.html" class="nav-item" data-page="home"><span class="nav-icon">🏠</span><span>Index</span></a>
+  <a href="orders.html" class="nav-item" data-page="orders"><span class="nav-icon">📋</span><span>Order</span></a>
+  <a href="recharge.html" class="nav-item" data-page="recharge"><span class="nav-icon">💰</span><span>Recharge</span></a>
+  <a href="promotion.html" class="nav-item" data-page="promotion"><span class="nav-icon">📢</span><span>Promotion</span></a>
+  <a href="trade.html" class="nav-item" data-page="trade"><span class="nav-icon">💼</span><span>Trade</span></a>
+  <a href="team.html" class="nav-item" data-page="team"><span class="nav-icon">👥</span><span>Team</span></a>
+  <a href="profile.html" class="nav-item" data-page="profile"><span class="nav-icon">👤</span><span>Personal</span></a>
+</nav>
+<script src="js/app.js"></script>
+</body>
+</html>

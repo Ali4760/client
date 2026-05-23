@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ALE - Register</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="register">
+<div class="app-container" style="background:var(--bg-secondary);padding-bottom:0;min-height:100vh;">
+
+  <div class="page-header" style="background:transparent;border:none;">
+    <button class="back-btn" onclick="history.back()">❮</button>
+  </div>
+
+  <div class="auth-container" style="padding-top:10px;">
+    <h1 class="auth-title">Create Account</h1>
+    
+    <div class="auth-form">
+      <div class="form-group">
+        <label class="form-label">Nick name</label>
+        <input type="text" class="form-input" placeholder="Please enter a nickname">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Phone number</label>
+        <input type="tel" class="form-input" placeholder="Please enter phone number">
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-input" placeholder="Please enter the password">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Confirm Password</label>
+        <input type="password" class="form-input" placeholder="Please enter the confirmation password">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Withdrawal password</label>
+        <input type="password" class="form-input" placeholder="Please enter the withdrawal password">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Invitation code</label>
+        <input type="text" class="form-input" placeholder="Please enter the invitation code">
+      </div>
+
+      <button class="auth-btn" onclick="alert('Registering...'); window.location.href='login.html'">Register</button>
+    </div>
+
+    <div class="auth-footer">
+      Existing users? <a href="login.html">Log in</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ALE - Withdraw</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="withdraw">
+<div class="app-container">
+  <div class="page-header">
+    <button class="back-btn" onclick="history.back()">❮</button>
+    <span class="title">Withdraw</span>
+  </div>
+
+  <div class="withdrawal-info">
+    <div class="info-row">
+      <span class="label">Available Balance</span>
+      <span class="value">4,250.00 USDT</span>
+    </div>
+    <div class="info-row">
+      <span class="label">At least withdrawal amount</span>
+      <span class="value">10.00 USDT</span>
+    </div>
+  </div>
+
+  <div class="recharge-form" style="padding-top: 0;">
+    <div class="form-group">
+      <label class="form-label">Withdrawal address</label>
+      <div class="form-input" style="background: var(--bg-input); color: var(--text-muted);">TRx7...QrE8L</div>
+      <div style="font-size: 12px; color: var(--warning); margin-top: 6px;">Please set withdrawal address in personal information first</div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Amount</label>
+      <input type="number" class="form-input" placeholder="Please enter the withdrawal amount">
+      <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">Fee: 0% | Actually: 0.00 USDT</div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input type="password" class="form-input" placeholder="Please enter your password">
+    </div>
+
+    <button class="btn-primary" onclick="alert('In the withdrawal ...')">Withdraw</button>
+  </div>
+</div>
+<script src="js/app.js"></script>
+</body>
+</html>

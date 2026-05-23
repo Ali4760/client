@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ALE - Log in</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="login">
+<div class="app-container" style="background:var(--bg-secondary);padding-bottom:0;">
+
+  <div class="auth-container">
+    <div class="auth-logo">ALE</div>
+    <h1 class="auth-title">Welcome Back</h1>
+    
+    <div class="auth-form">
+      <div class="form-group">
+        <label class="form-label">Phone number</label>
+        <input type="tel" class="form-input" placeholder="Please enter phone number">
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-input" placeholder="Please enter the password">
+      </div>
+
+      <div class="form-group remember-row">
+        <input type="checkbox" id="remember" checked>
+        <label for="remember">Remember the password</label>
+      </div>
+
+      <button class="auth-btn" onclick="window.location.href='home.html'">Log in</button>
+    </div>
+
+    <div class="auth-footer">
+      No account? <a href="register.html">Register</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

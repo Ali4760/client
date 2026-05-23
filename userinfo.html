@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ALE - Personal information</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="userinfo">
+<div class="app-container">
+  <div class="page-header">
+    <button class="back-btn" onclick="history.back()">❮</button>
+    <span class="title">Personal information</span>
+  </div>
+
+  <div class="userinfo-list" style="margin-top: 16px;">
+    <div class="userinfo-item" onclick="openDialog('nicknameDialog')">
+      <span class="item-label">Nick name</span>
+      <div class="item-value">
+        <span>User123</span>
+        <span class="item-arrow">▶</span>
+      </div>
+    </div>
+    <div class="userinfo-item">
+      <span class="item-label">Telephone</span>
+      <div class="item-value">
+        <span>123****4567</span>
+      </div>
+    </div>
+    <div class="userinfo-item" onclick="openDialog('passwordDialog')">
+      <span class="item-label">Password</span>
+      <div class="item-value">
+        <span>Revise</span>
+        <span class="item-arrow">▶</span>
+      </div>
+    </div>
+    <div class="userinfo-item" onclick="openDialog('withdrawPasswordDialog')">
+      <span class="item-label">Withdrawal password</span>
+      <div class="item-value">
+        <span>Revise</span>
+        <span class="item-arrow">▶</span>
+      </div>
+    </div>
+    <div class="userinfo-item" onclick="openDialog('addressDialog')">
+      <span class="item-label">TRC-20 withdrawal address</span>
+      <div class="item-value">
+        <span>TRx7...QrE8L</span>
+        <span class="item-arrow">▶</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Nickname Dialog -->
+<div class="dialog-overlay" id="nicknameDialog">
+  <div class="dialog-box">
+    <div class="dialog-title">Nick name</div>
+    <div class="dialog-body" style="text-align: left;">
+      <input type="text" class="form-input" placeholder="Please enter the nickname to be replaced">
+    </div>
+    <div class="dialog-actions">
+      <button class="btn btn-cancel" onclick="closeDialog('nicknameDialog')">Cancel</button>
+      <button class="btn btn-confirm" onclick="closeDialog('nicknameDialog'); alert('Successful')">Set up</button>
+    </div>
+  </div>
+</div>
+
+<!-- Password Dialog -->
+<div class="dialog-overlay" id="passwordDialog">
+  <div class="dialog-box">
+    <div class="dialog-title">Password</div>
+    <div class="dialog-body" style="text-align: left;">
+      <input type="password" class="form-input mb-8" placeholder="Old Password">
+      <input type="password" class="form-input mb-8" placeholder="New Password">
+      <input type="password" class="form-input" placeholder="Confirm Password">
+    </div>
+    <div class="dialog-actions">
+      <button class="btn btn-cancel" onclick="closeDialog('passwordDialog')">Cancel</button>
+      <button class="btn btn-confirm" onclick="closeDialog('passwordDialog'); alert('Successful')">Set up</button>
+    </div>
+  </div>
+</div>
+
+<!-- Withdraw Password Dialog -->
+<div class="dialog-overlay" id="withdrawPasswordDialog">
+  <div class="dialog-box">
+    <div class="dialog-title">Withdrawal password</div>
+    <div class="dialog-body" style="text-align: left;">
+      <input type="password" class="form-input mb-8" placeholder="Please enter the withdrawal password">
+      <input type="password" class="form-input" placeholder="Please enter the confirmation withdrawal password">
+    </div>
+    <div class="dialog-actions">
+      <button class="btn btn-cancel" onclick="closeDialog('withdrawPasswordDialog')">Cancel</button>
+      <button class="btn btn-confirm" onclick="closeDialog('withdrawPasswordDialog'); alert('Successful')">Set up</button>
+    </div>
+  </div>
+</div>
+
+<!-- Address Dialog -->
+<div class="dialog-overlay" id="addressDialog">
+  <div class="dialog-box">
+    <div class="dialog-title">TRC-20 withdrawal address</div>
+    <div class="dialog-body" style="text-align: left;">
+      <input type="text" class="form-input" placeholder="Please enter your address">
+    </div>
+    <div class="dialog-actions">
+      <button class="btn btn-cancel" onclick="closeDialog('addressDialog')">Cancel</button>
+      <button class="btn btn-confirm" onclick="closeDialog('addressDialog'); alert('Successful')">Set up</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

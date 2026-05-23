@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ALE - Capital details</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="financial">
+<div class="app-container">
+  <div class="page-header">
+    <button class="back-btn" onclick="history.back()">❮</button>
+    <span class="title">Capital details</span>
+  </div>
+
+  <div class="financial-filter">
+    <div class="filter-tag active">All</div>
+    <div class="filter-tag">Recharge</div>
+    <div class="filter-tag">Withdraw</div>
+    <div class="filter-tag">Commission</div>
+    <div class="filter-tag">Award</div>
+  </div>
+
+  <div style="padding: 0 16px 8px;">
+    <span class="tip-red" style="padding: 0;">Only showing capital details from the last 3 months</span>
+  </div>
+
+  <div class="record-list">
+    <div class="record-card">
+      <div class="record-row">
+        <span class="label">Amount</span>
+        <span class="value success">+150.00</span>
+      </div>
+      <div class="record-row">
+        <span class="label">Balance</span>
+        <span class="value">4,250.00</span>
+      </div>
+      <div class="record-row">
+        <span class="label">Time</span>
+        <span class="value">2025-11-08 14:30:22</span>
+      </div>
+    </div>
+
+    <div class="record-card">
+      <div class="record-row">
+        <span class="label">Amount</span>
+        <span class="value danger">-500.00</span>
+      </div>
+      <div class="record-row">
+        <span class="label">Balance</span>
+        <span class="value">4,100.00</span>
+      </div>
+      <div class="record-row">
+        <span class="label">Time</span>
+        <span class="value">2025-11-07 09:15:00</span>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="js/app.js"></script>
+</body>
+</html>
