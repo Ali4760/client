@@ -13,32 +13,32 @@
   <div class="recharge-form">
     <div class="form-group">
       <label class="form-label">Currency selection</label>
-      <select class="form-select">
+      <select class="form-select" id="rechargeCurrency">
         <option>USDT</option>
       </select>
     </div>
-
+ 
     <div class="form-group">
       <label class="form-label">Select the protocol to use</label>
-      <select class="form-select">
+      <select class="form-select" id="rechargeProtocol">
         <option>TRC-20</option>
         <option>ERC-20</option>
         <option>BRC-20</option>
       </select>
     </div>
-
+ 
     <div class="form-group">
       <label class="form-label">Deposit amount</label>
-      <input type="number" class="form-input" placeholder="Deposit amount must be greater than 0.1 USDT">
+      <input type="number" class="form-input" id="rechargeAmount" placeholder="Deposit amount must be greater than 0.1 USDT">
     </div>
-
+ 
     <div class="deposit-address">
       <div class="form-label">The deposit address only supports TRC20-USDT</div>
-      <div class="address-text">TRx7NqFh8Z2kYJg5K9p4YzD2mVwBcQrE8L</div>
-      <button class="copy-btn" onclick="alert('Replication')">Click to copy</button>
+      <div class="address-text" id="depositAddress">TRx7NqFh8Z2kYJg5K9p4YzD2mVwBcQrE8L</div>
+      <button class="copy-btn" onclick="copyDepositAddress()">Click to copy</button>
     </div>
-
-    <button class="btn-primary" onclick="alert('The submission is successful, the system is being processed, please wait ...')">Deposit now</button>
+ 
+    <button class="btn-primary" onclick="submitRechargeRequest()">Deposit now</button>
 
     <div style="text-align:center;margin-top:16px;">
       <a href="recharge-record.html" style="color:var(--accent);font-size:13px;">View recharge record →</a>
@@ -51,14 +51,12 @@
 </div>
 
 <nav class="bottom-nav">
-  <a href="home.html" class="nav-item" data-page="home"><span class="nav-icon">🏠</span><span>Index</span></a>
-  <a href="orders.html" class="nav-item" data-page="orders"><span class="nav-icon">📋</span><span>Order</span></a>
-  <a href="recharge.html" class="nav-item" data-page="recharge"><span class="nav-icon">💰</span><span>Recharge</span></a>
-  <a href="promotion.html" class="nav-item" data-page="promotion"><span class="nav-icon">📢</span><span>Promotion</span></a>
-  <a href="trade.html" class="nav-item" data-page="trade"><span class="nav-icon">💼</span><span>Trade</span></a>
-  <a href="team.html" class="nav-item" data-page="team"><span class="nav-icon">👥</span><span>Team</span></a>
-  <a href="profile.html" class="nav-item" data-page="profile"><span class="nav-icon">👤</span><span>Personal</span></a>
+  <a href="home.html" class="nav-item" data-page="home"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span><span>Index</span></a>
+  <a href="orders.html" class="nav-item" data-page="orders"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span><span>Order</span></a>
+  <a href="trade.html" class="nav-item" data-page="trade"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span><span>Trade</span></a>
+  <a href="team.html" class="nav-item" data-page="team"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span>Team</span></a>
+  <a href="profile.html" class="nav-item" data-page="profile"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span>Personal</span></a>
 </nav>
-<script src="js/app.js"></script>
+<script type="module" src="js/app.js"></script>
 </body>
 </html>

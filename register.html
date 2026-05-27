@@ -9,45 +9,129 @@
 <body data-page="register">
 <div class="app-container" style="background:var(--bg-secondary);padding-bottom:0;min-height:100vh;">
 
+  <!-- Premium Animated SVG Floating Gradient Background Backdrop -->
+  <div class="gradient-bg-wrapper">
+    <svg viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <linearGradient id="rev_grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color: var(--color-primary); stop-opacity: 0.8;" /><stop offset="100%" style="stop-color: var(--color-chart-3); stop-opacity: 0.6;" /></linearGradient>
+        <linearGradient id="rev_grad2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color: var(--color-chart-4); stop-opacity: 0.9;" /><stop offset="50%" style="stop-color: var(--color-secondary); stop-opacity: 0.7;" /><stop offset="100%" style="stop-color: var(--color-chart-1); stop-opacity: 0.6;" /></linearGradient>
+        <radialGradient id="rev_grad3" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color: var(--color-destructive); stop-opacity: 0.8;" /><stop offset="100%" style="stop-color: var(--color-chart-5); stop-opacity: 0.4;" /></radialGradient>
+        <filter id="rev_blur1" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="35"/></filter>
+        <filter id="rev_blur2" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="25"/></filter>
+        <filter id="rev_blur3" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="45"/></filter>
+      </defs>
+      <g class="float-g1">
+        <ellipse cx="200" cy="500" rx="250" ry="180" fill="url(#rev_grad1)" filter="url(#rev_blur1)" transform="rotate(-30 200 500)"/>
+        <rect x="500" y="100" width="300" height="250" rx="80" fill="url(#rev_grad2)" filter="url(#rev_blur2)" transform="rotate(15 650 225)"/>
+      </g>
+      <g class="float-g2">
+        <circle cx="650" cy="450" r="150" fill="url(#rev_grad3)" filter="url(#rev_blur3)" opacity="0.7"/>
+        <ellipse cx="50" cy="150" rx="180" ry="120" fill="var(--color-accent)" filter="url(#rev_blur2)" opacity="0.8"/>
+      </g>
+    </svg>
+  </div>
+
   <div class="page-header" style="background:transparent;border:none;">
-    <button class="back-btn" onclick="history.back()">❮</button>
+    <button class="back-btn" onclick="history.back()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
   </div>
 
   <div class="auth-container" style="padding-top:10px;">
     <h1 class="auth-title">Create Account</h1>
+    <p style="color:var(--text-muted);font-size:14px;margin-top:-24px;margin-bottom:28px;">Join our platform and start earning</p>
     
     <div class="auth-form">
       <div class="form-group">
         <label class="form-label">Nick name</label>
-        <input type="text" class="form-input" placeholder="Please enter a nickname">
+        <div style="position:relative;">
+          <input type="text" id="registerNickname" class="form-input" placeholder="Please enter a nickname" style="padding-left:44px;">
+          <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);display:flex;align-items:center;color:var(--text-muted);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <div style="position:relative;">
+          <input type="email" id="registerEmail" class="form-input" placeholder="Please enter your email address" style="padding-left:44px; height: 50px;">
+          <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);display:flex;align-items:center;color:var(--text-muted);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </span>
+        </div>
       </div>
 
       <div class="form-group">
         <label class="form-label">Phone number</label>
-        <input type="tel" class="form-input" placeholder="Please enter phone number">
+        <div style="display:flex; gap: 8px;">
+          <div style="position:relative; width: 110px; flex-shrink: 0;" id="customCountryDropdownContainer">
+            <!-- Hidden input maintaining complete compatibility with existing JS registration hooks -->
+            <input type="hidden" id="registerCountryCode" value="+20">
+            <div id="countryDropdownTrigger" style="display:flex; align-items:center; justify-content:space-between; width:100%; height:50px; padding:0 12px; cursor:pointer; font-size:14px; font-weight:600; user-select:none; transition:all 0.3s ease; border-radius:14px; border:none; background:transparent;">
+              <span id="selectedCountryDisplay">🇪🇬 +20</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.6;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            
+            <div id="countryDropdownMenu" style="display:none; position:absolute; top:56px; left:0; width:290px; max-height:280px; z-index:2000; overflow:hidden; flex-direction:column;">
+              <div style="padding:10px; border-bottom:1px solid var(--border-glass); background:rgba(0,0,0,0.06); display:flex; align-items:center;">
+                <input type="text" id="countrySearchInput" placeholder="Search country..." style="width:100%; height:36px; padding:0 10px; border:1px solid var(--border-glass); border-radius:8px; background:var(--bg-input); color:var(--text-primary); font-size:13px; font-weight:500; outline:none;">
+              </div>
+              <div id="countryListArea" style="flex:1; overflow-y:auto; max-height:220px; padding:6px 0;">
+                <!-- Populate dynamically via dynamic JS country list -->
+              </div>
+            </div>
+          </div>
+          <div style="position:relative; flex:1;">
+            <input type="tel" id="registerPhone" class="form-input" placeholder="Please enter phone number" style="padding-left:44px; height: 50px;">
+            <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);display:flex;align-items:center;color:var(--text-muted);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+            </span>
+          </div>
+        </div>
       </div>
       
       <div class="form-group">
         <label class="form-label">Password</label>
-        <input type="password" class="form-input" placeholder="Please enter the password">
+        <div style="position:relative;">
+          <input type="password" id="registerPassword" class="form-input" placeholder="Please enter the password" style="padding-left:44px; height: 50px;" oninput="checkPasswordStrength(this)">
+          <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);display:flex;align-items:center;color:var(--text-muted);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </span>
+        </div>
+        <div class="password-strength">
+          <div class="strength-bar"></div>
+          <div class="strength-bar"></div>
+          <div class="strength-bar"></div>
+          <div class="strength-bar"></div>
+        </div>
+        <div class="strength-text"></div>
       </div>
 
       <div class="form-group">
-        <label class="form-label">Confirm Password</label>
-        <input type="password" class="form-input" placeholder="Please enter the confirmation password">
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Withdrawal password</label>
-        <input type="password" class="form-input" placeholder="Please enter the withdrawal password">
+        <label class="form-label">Captcha Verification</label>
+        <div style="display:flex; gap: 8px;">
+          <div style="position:relative; flex:1;">
+            <input type="text" id="registerCaptchaAnswer" class="form-input" placeholder="Enter captcha answer" style="padding-left:44px; height: 50px;">
+            <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);display:flex;align-items:center;color:var(--text-muted);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>
+            </span>
+          </div>
+          <div id="captchaBox" style="width: 105px; height: 50px; background: var(--bg-input); border-radius: 14px; border: 1px solid var(--border-glass); display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: var(--accent); user-select: none; letter-spacing: 0.05em; cursor: pointer; flex-shrink: 0;" title="Click to refresh captcha" onclick="generateNewCaptcha()">
+            5 + 7
+          </div>
+        </div>
       </div>
 
       <div class="form-group">
         <label class="form-label">Invitation code</label>
-        <input type="text" class="form-input" placeholder="Please enter the invitation code">
+        <div style="position:relative;">
+          <input type="text" id="registerInviteCode" class="form-input" placeholder="Please enter the invitation code" style="padding-left:44px; height: 50px;">
+          <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);display:flex;align-items:center;color:var(--text-muted);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"/><path d="M4 6v12c0 1.1.9 2 2 2h14v-4"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></svg>
+          </span>
+        </div>
       </div>
 
-      <button class="auth-btn" onclick="alert('Registering...'); window.location.href='login.html'">Register</button>
+      <button class="auth-btn" onclick="handleRegistration()">Register</button>
     </div>
 
     <div class="auth-footer">
@@ -56,5 +140,357 @@
   </div>
 
 </div>
+<script type="module" src="js/app.js"></script>
+<script>
+  // All 240+ countries/territories in the world alphabetically sorted, complete with flags and international dialing codes
+  const allCountries = [
+    { name: "Afghanistan", code: "+93", emoji: "🇦🇫" },
+    { name: "Albania", code: "+355", emoji: "🇦🇱" },
+    { name: "Algeria", code: "+213", emoji: "🇩🇿" },
+    { name: "American Samoa", code: "+1-684", emoji: "🇦🇸" },
+    { name: "Andorra", code: "+376", emoji: "🇦🇩" },
+    { name: "Angola", code: "+244", emoji: "🇦🇴" },
+    { name: "Anguilla", code: "+1-264", emoji: "🇦🇮" },
+    { name: "Antarctica", code: "+672", emoji: "🇦🇶" },
+    { name: "Antigua and Barbuda", code: "+1-268", emoji: "🇦🇬" },
+    { name: "Argentina", code: "+54", emoji: "🇦🇷" },
+    { name: "Armenia", code: "+374", emoji: "🇦🇲" },
+    { name: "Aruba", code: "+297", emoji: "🇦🇼" },
+    { name: "Australia", code: "+61", emoji: "🇦🇺" },
+    { name: "Austria", code: "+43", emoji: "🇦🇹" },
+    { name: "Azerbaijan", code: "+994", emoji: "🇦🇿" },
+    { name: "Bahamas", code: "+1-242", emoji: "🇧🇸" },
+    { name: "Bahrain", code: "+973", emoji: "🇧🇭" },
+    { name: "Bangladesh", code: "+880", emoji: "🇧🇩" },
+    { name: "Barbados", code: "+1-246", emoji: "🇧🇧" },
+    { name: "Belarus", code: "+375", emoji: "🇧🇾" },
+    { name: "Belgium", code: "+32", emoji: "🇧🇪" },
+    { name: "Belize", code: "+501", emoji: "🇧🇿" },
+    { name: "Benin", code: "+229", emoji: "🇧🇯" },
+    { name: "Bermuda", code: "+1-441", emoji: "🇧🇲" },
+    { name: "Bhutan", code: "+975", emoji: "🇧🇹" },
+    { name: "Bolivia", code: "+591", emoji: "🇧🇴" },
+    { name: "Bosnia and Herzegovina", code: "+387", emoji: "🇧🇦" },
+    { name: "Botswana", code: "+267", emoji: "🇧🇼" },
+    { name: "Brazil", code: "+55", emoji: "🇧🇷" },
+    { name: "British Indian Ocean Territory", code: "+246", emoji: "🇮🇴" },
+    { name: "British Virgin Islands", code: "+1-284", emoji: "🇻🇬" },
+    { name: "Brunei", code: "+673", emoji: "🇧🇳" },
+    { name: "Bulgaria", code: "+359", emoji: "🇧🇬" },
+    { name: "Burkina Faso", code: "+226", emoji: "🇧🇫" },
+    { name: "Burundi", code: "+257", emoji: "🇧🇮" },
+    { name: "Cambodia", code: "+855", emoji: "🇰🇭" },
+    { name: "Cameroon", code: "+237", emoji: "🇨🇲" },
+    { name: "Canada", code: "+1", emoji: "🇨🇦" },
+    { name: "Cape Verde", code: "+238", emoji: "🇨🇻" },
+    { name: "Cayman Islands", code: "+1-345", emoji: "🇰🇾" },
+    { name: "Central African Republic", code: "+236", emoji: "🇨🇫" },
+    { name: "Chad", code: "+235", emoji: "🇹🇩" },
+    { name: "Chile", code: "+56", emoji: "🇨🇱" },
+    { name: "China", code: "+86", emoji: "🇨🇳" },
+    { name: "Christmas Island", code: "+61", emoji: "🇨🇽" },
+    { name: "Cocos (Keeling) Islands", code: "+61", emoji: "🇨🇨" },
+    { name: "Colombia", code: "+57", emoji: "🇨🇴" },
+    { name: "Comoros", code: "+269", emoji: "🇰🇲" },
+    { name: "Cook Islands", code: "+682", emoji: "🇨🇰" },
+    { name: "Costa Rica", code: "+506", emoji: "🇨🇷" },
+    { name: "Croatia", code: "+385", emoji: "🇭🇷" },
+    { name: "Cuba", code: "+53", emoji: "🇨🇺" },
+    { name: "Curacao", code: "+599", emoji: "🇨🇼" },
+    { name: "Cyprus", code: "+357", emoji: "🇨🇾" },
+    { name: "Czech Republic", code: "+420", emoji: "🇨🇿" },
+    { name: "Democratic Republic of the Congo", code: "+243", emoji: "🇨🇩" },
+    { name: "Denmark", code: "+45", emoji: "🇩🇰" },
+    { name: "Djibouti", code: "+253", emoji: "🇩🇯" },
+    { name: "Dominica", code: "+1-767", emoji: "🇩🇲" },
+    { name: "Dominican Republic", code: "+1-809", emoji: "🇩🇴" },
+    { name: "East Timor", code: "+670", emoji: "🇹🇱" },
+    { name: "Ecuador", code: "+593", emoji: "🇪🇨" },
+    { name: "Egypt", code: "+20", emoji: "🇪🇬" },
+    { name: "El Salvador", code: "+503", emoji: "🇸🇻" },
+    { name: "Equatorial Guinea", code: "+240", emoji: "🇬🇶" },
+    { name: "Eritrea", code: "+291", emoji: "🇪🇷" },
+    { name: "Estonia", code: "+372", emoji: "🇪🇪" },
+    { name: "Ethiopia", code: "+251", emoji: "🇪🇹" },
+    { name: "Falkland Islands", code: "+500", emoji: "🇫🇰" },
+    { name: "Faroe Islands", code: "+298", emoji: "🇫🇴" },
+    { name: "Fiji", code: "+679", emoji: "🇫🇯" },
+    { name: "Finland", code: "+358", emoji: "🇫🇮" },
+    { name: "France", code: "+33", emoji: "🇫🇷" },
+    { name: "French Guiana", code: "+594", emoji: "🇬🇫" },
+    { name: "French Polynesia", code: "+689", emoji: "🇵🇫" },
+    { name: "Gabon", code: "+241", emoji: "🇬🇦" },
+    { name: "Gambia", code: "+220", emoji: "🇬🇲" },
+    { name: "Georgia", code: "+995", emoji: "🇬🇪" },
+    { name: "Germany", code: "+49", emoji: "🇩🇪" },
+    { name: "Ghana", code: "+233", emoji: "🇬🇭" },
+    { name: "Gibraltar", code: "+350", emoji: "🇬🇮" },
+    { name: "Greece", code: "+30", emoji: "🇬🇷" },
+    { name: "Greenland", code: "+299", emoji: "🇬🇱" },
+    { name: "Grenada", code: "+1-473", emoji: "🇬🇩" },
+    { name: "Guadeloupe", code: "+590", emoji: "🇬🇵" },
+    { name: "Guam", code: "+1-671", emoji: "🇬🇺" },
+    { name: "Guatemala", code: "+502", emoji: "🇬🇹" },
+    { name: "Guernsey", code: "+44", emoji: "🇬🇬" },
+    { name: "Guinea", code: "+224", emoji: "🇬🇳" },
+    { name: "Guinea-Bissau", code: "+245", emoji: "🇬🇼" },
+    { name: "Guyana", code: "+592", emoji: "🇬🇾" },
+    { name: "Haiti", code: "+509", emoji: "🇭🇹" },
+    { name: "Honduras", code: "+504", emoji: "🇭🇳" },
+    { name: "Hong Kong", code: "+852", emoji: "🇭🇰" },
+    { name: "Hungary", code: "+36", emoji: "🇭🇺" },
+    { name: "Iceland", code: "+354", emoji: "🇮🇸" },
+    { name: "India", code: "+91", emoji: "🇮🇳" },
+    { name: "Indonesia", code: "+62", emoji: "🇮🇩" },
+    { name: "Iran", code: "+98", emoji: "🇮🇷" },
+    { name: "Iraq", code: "+964", emoji: "🇮🇶" },
+    { name: "Ireland", code: "+353", emoji: "🇮🇪" },
+    { name: "Isle of Man", code: "+44", emoji: "🇮🇲" },
+    { name: "Israel", code: "+972", emoji: "🇮🇱" },
+    { name: "Italy", code: "+39", emoji: "🇮🇹" },
+    { name: "Ivory Coast", code: "+225", emoji: "🇨🇮" },
+    { name: "Jamaica", code: "+1-876", emoji: "🇯🇲" },
+    { name: "Japan", code: "+81", emoji: "🇯🇵" },
+    { name: "Jersey", code: "+44", emoji: "🇯🇪" },
+    { name: "Jordan", code: "+962", emoji: "🇯🇴" },
+    { name: "Kazakhstan", code: "+7", emoji: "🇰🇿" },
+    { name: "Kenya", code: "+254", emoji: "🇰🇪" },
+    { name: "Kiribati", code: "+686", emoji: "🇰🇮" },
+    { name: "Kosovo", code: "+383", emoji: "🇽🇰" },
+    { name: "Kuwait", code: "+965", emoji: "🇰🇼" },
+    { name: "Kyrgyzstan", code: "+996", emoji: "🇰🇬" },
+    { name: "Laos", code: "+856", emoji: "🇱🇦" },
+    { name: "Latvia", code: "+371", emoji: "🇱🇻" },
+    { name: "Lebanon", code: "+961", emoji: "🇱🇧" },
+    { name: "Lesotho", code: "+266", emoji: "🇱🇸" },
+    { name: "Liberia", code: "+231", emoji: "🇱🇷" },
+    { name: "Libya", code: "+218", emoji: "🇱🇾" },
+    { name: "Liechtenstein", code: "+423", emoji: "🇱🇮" },
+    { name: "Lithuania", code: "+370", emoji: "🇱🇹" },
+    { name: "Luxembourg", code: "+352", emoji: "🇱🇺" },
+    { name: "Macau", code: "+853", emoji: "🇲🇴" },
+    { name: "Macedonia", code: "+389", emoji: "🇲🇰" },
+    { name: "Madagascar", code: "+261", emoji: "🇲🇬" },
+    { name: "Malawi", code: "+265", emoji: "🇲🇼" },
+    { name: "Malaysia", code: "+60", emoji: "🇲🇾" },
+    { name: "Maldives", code: "+960", emoji: "🇲🇻" },
+    { name: "Mali", code: "+223", emoji: "🇲🇱" },
+    { name: "Malta", code: "+356", emoji: "🇲🇹" },
+    { name: "Marshall Islands", code: "+692", emoji: "🇲🇭" },
+    { name: "Martinique", code: "+596", emoji: "🇲🇶" },
+    { name: "Mauritania", code: "+222", emoji: "🇲🇷" },
+    { name: "Mauritius", code: "+230", emoji: "🇲🇺" },
+    { name: "Mayotte", code: "+262", emoji: "🇾🇹" },
+    { name: "Mexico", code: "+52", emoji: "🇲🇽" },
+    { name: "Micronesia", code: "+691", emoji: "🇫🇲" },
+    { name: "Moldova", code: "+373", emoji: "🇲🇩" },
+    { name: "Monaco", code: "+377", emoji: "🇲🇨" },
+    { name: "Mongolia", code: "+976", emoji: "🇲🇳" },
+    { name: "Montenegro", code: "+382", emoji: "🇲🇪" },
+    { name: "Montserrat", code: "+1-664", emoji: "🇲🇸" },
+    { name: "Morocco", code: "+212", emoji: "🇲🇦" },
+    { name: "Mozambique", code: "+258", emoji: "🇲🇿" },
+    { name: "Myanmar", code: "+95", emoji: "🇲🇲" },
+    { name: "Namibia", code: "+264", emoji: "🇳🇦" },
+    { name: "Nauru", code: "+674", emoji: "🇳🇷" },
+    { name: "Nepal", code: "+977", emoji: "🇳🇵" },
+    { name: "Netherlands", code: "+31", emoji: "🇳🇱" },
+    { name: "New Caledonia", code: "+687", emoji: "🇳🇨" },
+    { name: "New Zealand", code: "+64", emoji: "🇳🇿" },
+    { name: "Nicaragua", code: "+505", emoji: "🇳🇮" },
+    { name: "Niger", code: "+227", emoji: "🇳🇪" },
+    { name: "Nigeria", code: "+234", emoji: "🇳🇬" },
+    { name: "Niue", code: "+683", emoji: "🇳🇺" },
+    { name: "North Korea", code: "+850", emoji: "🇰🇵" },
+    { name: "Northern Mariana Islands", code: "+1-670", emoji: "🇲🇵" },
+    { name: "Norway", code: "+47", emoji: "🇳🇴" },
+    { name: "Oman", code: "+968", emoji: "🇴🇲" },
+    { name: "Pakistan", code: "+92", emoji: "🇵🇰" },
+    { name: "Palau", code: "+680", emoji: "🇵🇼" },
+    { name: "Palestine", code: "+970", emoji: "🇵🇸" },
+    { name: "Panama", code: "+507", emoji: "🇵🇦" },
+    { name: "Papua New Guinea", code: "+675", emoji: "🇵🇬" },
+    { name: "Paraguay", code: "+595", emoji: "🇵🇾" },
+    { name: "Peru", code: "+51", emoji: "🇵🇪" },
+    { name: "Philippines", code: "+63", emoji: "🇵🇭" },
+    { name: "Pitcairn", code: "+64", emoji: "🇵🇳" },
+    { name: "Poland", code: "+48", emoji: "🇵🇱" },
+    { name: "Portugal", code: "+351", emoji: "🇵🇹" },
+    { name: "Puerto Rico", code: "+1-787", emoji: "🇵🇷" },
+    { name: "Qatar", code: "+974", emoji: "🇶🇦" },
+    { name: "Republic of the Congo", code: "+242", emoji: "🇨🇬" },
+    { name: "Reunion", code: "+262", emoji: "🇷🇪" },
+    { name: "Romania", code: "+40", emoji: "🇷🇴" },
+    { name: "Russia", code: "+7", emoji: "🇷🇺" },
+    { name: "Rwanda", code: "+250", emoji: "🇷🇼" },
+    { name: "Saint Barthelemy", code: "+590", emoji: "🇧🇱" },
+    { name: "Saint Helena", code: "+290", emoji: "🇸🇭" },
+    { name: "Saint Kitts and Nevis", code: "+1-869", emoji: "🇰🇳" },
+    { name: "Saint Lucia", code: "+1-758", emoji: "🇱🇨" },
+    { name: "Saint Martin", code: "+590", emoji: "🇲🇫" },
+    { name: "Saint Pierre and Miquelon", code: "+508", emoji: "🇵🇲" },
+    { name: "Saint Vincent and the Grenadines", code: "+1-784", emoji: "🇻🇨" },
+    { name: "Samoa", code: "+685", emoji: "🇼🇸" },
+    { name: "San Marino", code: "+378", emoji: "🇸🇲" },
+    { name: "Sao Tome and Principe", code: "+239", emoji: "🇸🇹" },
+    { name: "Saudi Arabia", code: "+966", emoji: "🇸🇦" },
+    { name: "Senegal", code: "+221", emoji: "🇸🇳" },
+    { name: "Serbia", code: "+381", emoji: "🇷🇸" },
+    { name: "Seychelles", code: "+248", emoji: "🇸🇨" },
+    { name: "Sierra Leone", code: "+232", emoji: "🇸🇱" },
+    { name: "Singapore", code: "+65", emoji: "🇸🇬" },
+    { name: "Sint Maarten", code: "+1-721", emoji: "🇸🇽" },
+    { name: "Slovakia", code: "+421", emoji: "🇸🇰" },
+    { name: "Slovenia", code: "+386", emoji: "🇸🇮" },
+    { name: "Solomon Islands", code: "+677", emoji: "🇸🇧" },
+    { name: "Somalia", code: "+252", emoji: "🇸🇴" },
+    { name: "South Africa", code: "+27", emoji: "🇿🇦" },
+    { name: "South Korea", code: "+82", emoji: "🇰🇷" },
+    { name: "South Sudan", code: "+211", emoji: "🇸🇸" },
+    { name: "Spain", code: "+34", emoji: "🇪🇸" },
+    { name: "Sri Lanka", code: "+94", emoji: "🇱🇰" },
+    { name: "Sudan", code: "+249", emoji: "🇸🇩" },
+    { name: "Suriname", code: "+597", emoji: "🇸🇷" },
+    { name: "Svalbard and Jan Mayen", code: "+47", emoji: "🇸🇯" },
+    { name: "Swaziland", code: "+268", emoji: "🇸🇿" },
+    { name: "Sweden", code: "+46", emoji: "🇸🇪" },
+    { name: "Switzerland", code: "+41", emoji: "🇨🇭" },
+    { name: "Syria", code: "+963", emoji: "🇸🇾" },
+    { name: "Taiwan", code: "+886", emoji: "🇹🇼" },
+    { name: "Tajikistan", code: "+992", emoji: "🇹🇯" },
+    { name: "Tanzania", code: "+255", emoji: "🇹🇿" },
+    { name: "Thailand", code: "+66", emoji: "🇹🇭" },
+    { name: "Togo", code: "+228", emoji: "🇹🇬" },
+    { name: "Tokelau", code: "+690", emoji: "🇹🇰" },
+    { name: "Tonga", code: "+676", emoji: "🇹🇴" },
+    { name: "Trinidad and Tobago", code: "+1-868", emoji: "🇹🇹" },
+    { name: "Tunisia", code: "+216", emoji: "🇹🇳" },
+    { name: "Turkey", code: "+90", emoji: "🇹🇷" },
+    { name: "Turkmenistan", code: "+993", emoji: "🇹🇲" },
+    { name: "Turks and Caicos Islands", code: "+1-649", emoji: "🇹🇨" },
+    { name: "Tuvalu", code: "+688", emoji: "🇹🇻" },
+    { name: "U.S. Virgin Islands", code: "+1-340", emoji: "🇻🇮" },
+    { name: "Uganda", code: "+256", emoji: "🇺🇬" },
+    { name: "Ukraine", code: "+380", emoji: "🇺🇦" },
+    { name: "United Arab Emirates", code: "+971", emoji: "🇦🇪" },
+    { name: "United Kingdom", code: "+44", emoji: "🇬🇧" },
+    { name: "United States", code: "+1", emoji: "🇺🇸" },
+    { name: "Uruguay", code: "+598", emoji: "🇺🇾" },
+    { name: "Uzbekistan", code: "+998", emoji: "🇺🇿" },
+    { name: "Vanuatu", code: "+678", emoji: "🇻🇺" },
+    { name: "Vatican", code: "+379", emoji: "🇻🇦" },
+    { name: "Venezuela", code: "+58", emoji: "🇻🇪" },
+    { name: "Vietnam", code: "+84", emoji: "🇻🇳" },
+    { name: "Wallis and Futuna", code: "+681", emoji: "🇼🇫" },
+    { name: "Western Sahara", code: "+212", emoji: "🇪🇭" },
+    { name: "Yemen", code: "+967", emoji: "🇾🇪" },
+    { name: "Zambia", code: "+260", emoji: "🇿🇲" },
+    { name: "Zimbabwe", code: "+263", emoji: "🇿🇼" }
+  ];
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const trigger = document.getElementById('countryDropdownTrigger');
+    const menu = document.getElementById('countryDropdownMenu');
+    const searchInput = document.getElementById('countrySearchInput');
+    const listArea = document.getElementById('countryListArea');
+    const hiddenInput = document.getElementById('registerCountryCode');
+    const selectedDisplay = document.getElementById('selectedCountryDisplay');
+    const container = document.getElementById('customCountryDropdownContainer');
+
+    let currentSelectedCode = "+20";
+
+    function populateDropdown(filterText = "") {
+      listArea.innerHTML = "";
+      const query = filterText.toLowerCase().trim();
+
+      allCountries.forEach(country => {
+        const matchesName = country.name.toLowerCase().includes(query);
+        const matchesCode = country.code.includes(query);
+
+        if (matchesName || matchesCode) {
+          const item = document.createElement('div');
+          item.className = 'country-item';
+          if (country.code === currentSelectedCode && (country.name === 'Egypt' || currentSelectedCode !== '+20')) {
+            item.classList.add('selected');
+          }
+
+          item.innerHTML = `
+            <span class="flag-code">
+              <span style="font-size:16px; margin-right:4px;">${country.emoji}</span>
+              <span>${country.code}</span>
+            </span>
+            <span class="country-name" title="${country.name}">${country.name}</span>
+          `;
+
+          item.addEventListener('click', () => {
+            currentSelectedCode = country.code;
+            hiddenInput.value = country.code;
+            selectedDisplay.innerHTML = `${country.emoji} ${country.code}`;
+            closeDropdown();
+
+            // Trigger standard form updates if needed
+            const event = new Event('change', { bubbles: true });
+            hiddenInput.dispatchEvent(event);
+          });
+
+          listArea.appendChild(item);
+        }
+      });
+
+      if (listArea.children.length === 0) {
+        const noResults = document.createElement('div');
+        noResults.style.cssText = "padding:12px; font-size:12px; color:var(--text-muted); text-align:center;";
+        noResults.textContent = "No results found";
+        listArea.appendChild(noResults);
+      }
+    }
+
+    function toggleDropdown() {
+      const isVisible = menu.style.display === 'flex';
+      if (isVisible) {
+        closeDropdown();
+      } else {
+        openDropdown();
+      }
+    }
+
+    function openDropdown() {
+      menu.style.display = 'flex';
+      container.classList.add('active');
+      searchInput.value = "";
+      populateDropdown();
+      setTimeout(() => searchInput.focus(), 50);
+    }
+
+    function closeDropdown() {
+      menu.style.display = 'none';
+      container.classList.remove('active');
+    }
+
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleDropdown();
+    });
+
+    searchInput.addEventListener('input', (e) => {
+      populateDropdown(e.target.value);
+    });
+
+    searchInput.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!container.contains(e.target)) {
+        closeDropdown();
+      }
+    });
+
+    // Default select Egypt
+    hiddenInput.value = "+20";
+    populateDropdown();
+  });
+</script>
+<script type="module" src="js/app.js"></script>
 </body>
 </html>

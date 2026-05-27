@@ -17,152 +17,40 @@
   <!-- Task Stats -->
   <div class="task-content">
     <div class="taskNum">Currently complete / Overall task</div>
-    <div class="task-detail">15/40</div>
+    <div class="task-detail" id="orderStatsHeader">0/0</div>
   </div>
 
   <!-- Order Tabs -->
   <div class="order-btn">
-    <div class="active" data-tab="undone" onclick="switchTab(this)">Undone</div>
-    <div data-tab="finish" onclick="switchTab(this)">Finish</div>
+    <div class="active" data-tab="undone">Undone</div>
+    <div data-tab="finish">Finish</div>
   </div>
 
   <!-- Undone Orders -->
-  <div class="order-section" data-section="undone">
-    <div class="order-card" onclick="openDialog('orderDialog')">
-      <div class="order-card__header">
-        <div class="order-card__title">
-          <div class="order-card__title-text">Louis Vuitton 2021 pre-owned Spring OnTheGo PM tote bag</div>
-          <div class="order-card__summary">
-            <div class="order-card__price">$15,171,300.00</div>
-            <div class="order-card__quantity">x3746</div>
-          </div>
-        </div>
-        <div class="order-card__media">
-          <div class="order-card__image" style="background:var(--bg-input);display:flex;align-items:center;justify-content:center;font-size:24px;">🛍️</div>
-        </div>
-      </div>
-      <div class="order-card__divider"></div>
-      <div class="order-card__details">
-        <div class="detail-row"><span>Amount</span><span>15,171,300.00</span></div>
-        <div class="detail-row"><span>Expected return</span><span class="highlight">91,027.80</span></div>
-        <div class="detail-row"><span>Current task number</span><span>1</span></div>
-        <div class="detail-row"><span>Transaction hour</span><span>2025-11-08 00:30:53</span></div>
-      </div>
-    </div>
-
-    <div class="order-card">
-      <div class="order-card__header">
-        <div class="order-card__title">
-          <div class="order-card__title-text">Apple MacBook Pro 16-inch M3 Max Chip Laptop</div>
-          <div class="order-card__summary">
-            <div class="order-card__price">$3,499.00</div>
-            <div class="order-card__quantity">x120</div>
-          </div>
-        </div>
-        <div class="order-card__media">
-          <div class="order-card__image" style="background:var(--bg-input);display:flex;align-items:center;justify-content:center;font-size:24px;">💻</div>
-        </div>
-      </div>
-      <div class="order-card__divider"></div>
-      <div class="order-card__details">
-        <div class="detail-row"><span>Amount</span><span>419,880.00</span></div>
-        <div class="detail-row"><span>Expected return</span><span class="highlight">2,519.28</span></div>
-        <div class="detail-row"><span>Current task number</span><span>2</span></div>
-        <div class="detail-row"><span>Transaction hour</span><span>2025-11-08 01:15:22</span></div>
-      </div>
-    </div>
-
-    <div class="order-card">
-      <div class="order-card__header">
-        <div class="order-card__title">
-          <div class="order-card__title-text">Samsung Galaxy S24 Ultra 512GB Titanium</div>
-          <div class="order-card__summary">
-            <div class="order-card__price">$1,419.99</div>
-            <div class="order-card__quantity">x85</div>
-          </div>
-        </div>
-        <div class="order-card__media">
-          <div class="order-card__image" style="background:var(--bg-input);display:flex;align-items:center;justify-content:center;font-size:24px;">📱</div>
-        </div>
-      </div>
-      <div class="order-card__divider"></div>
-      <div class="order-card__details">
-        <div class="detail-row"><span>Amount</span><span>120,699.15</span></div>
-        <div class="detail-row"><span>Expected return</span><span class="highlight">724.19</span></div>
-        <div class="detail-row"><span>Current task number</span><span>3</span></div>
-        <div class="detail-row"><span>Transaction hour</span><span>2025-11-08 02:05:11</span></div>
-      </div>
-    </div>
+  <div class="order-section" id="undoneOrderSection" data-section="undone">
+    <!-- Rendered dynamically -->
   </div>
 
   <!-- Finished Orders (hidden by default) -->
-  <div class="order-section" data-section="finish" style="display:none;">
-    <div style="padding:12px 16px;">
-      <span class="tip-red" style="padding:0;">Only showing orders from the last 3 days</span>
+  <div class="order-section" id="finishOrderSection" data-section="finish" style="display:none;">
+    <div style="padding:12px 16px; text-align:center;">
+      <span class="tip-red" style="padding:0; font-weight:500;">Only showing orders from the last 3 days</span>
     </div>
-    <div class="order-card">
-      <div class="order-card__header">
-        <div class="order-card__title">
-          <div class="order-card__title-text">Nike Air Max 270 React Running Shoes</div>
-          <div class="order-card__summary">
-            <div class="order-card__price">$150.00</div>
-            <div class="order-card__quantity">x500</div>
-          </div>
-        </div>
-        <div class="order-card__media">
-          <div class="order-card__image" style="background:var(--bg-input);display:flex;align-items:center;justify-content:center;font-size:24px;">👟</div>
-        </div>
-      </div>
-      <div class="order-card__divider"></div>
-      <div class="order-card__details">
-        <div class="detail-row"><span>Amount</span><span>75,000.00</span></div>
-        <div class="detail-row"><span>Expected return</span><span class="highlight">450.00</span></div>
-        <div class="detail-row"><span>Current task number</span><span>1</span></div>
-        <div class="detail-row"><span>Transaction hour</span><span>2025-11-07 14:20:33</span></div>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<!-- Order Detail Dialog -->
-<div class="dialog-overlay" id="orderDialog">
-  <div class="dialog-box">
-    <div class="dialog-title">Order Details</div>
-    <div class="dialog-body" style="text-align:left;">
-      <div class="detail-row"><span>Amount</span><span>15,171,300.00</span></div>
-      <div class="detail-row"><span>Expected return</span><span class="highlight">91,027.80</span></div>
-      <div class="detail-row"><span>Current task number</span><span>1</span></div>
-      <div class="detail-row"><span>Transaction hour</span><span>2025-11-08 00:30:53</span></div>
-    </div>
-    <div class="dialog-actions">
-      <button class="btn btn-cancel" onclick="closeDialog('orderDialog')">Cancel</button>
-      <button class="btn btn-confirm" onclick="closeDialog('orderDialog')">Start trading</button>
+    <div id="finishOrderList">
+      <!-- Rendered dynamically -->
     </div>
   </div>
 </div>
 
 <!-- Bottom Navigation -->
 <nav class="bottom-nav">
-  <a href="home.html" class="nav-item" data-page="home"><span class="nav-icon">🏠</span><span>Index</span></a>
-  <a href="orders.html" class="nav-item" data-page="orders"><span class="nav-icon">📋</span><span>Order</span></a>
-  <a href="recharge.html" class="nav-item" data-page="recharge"><span class="nav-icon">💰</span><span>Recharge</span></a>
-  <a href="promotion.html" class="nav-item" data-page="promotion"><span class="nav-icon">📢</span><span>Promotion</span></a>
-  <a href="trade.html" class="nav-item" data-page="trade"><span class="nav-icon">💼</span><span>Trade</span></a>
-  <a href="team.html" class="nav-item" data-page="team"><span class="nav-icon">👥</span><span>Team</span></a>
-  <a href="profile.html" class="nav-item" data-page="profile"><span class="nav-icon">👤</span><span>Personal</span></a>
+  <a href="home.html" class="nav-item" data-page="home"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span><span>Index</span></a>
+  <a href="orders.html" class="nav-item" data-page="orders"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span><span>Order</span></a>
+  <a href="trade.html" class="nav-item" data-page="trade"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span><span>Trade</span></a>
+  <a href="team.html" class="nav-item" data-page="team"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span>Team</span></a>
+  <a href="profile.html" class="nav-item" data-page="profile"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span>Personal</span></a>
 </nav>
 
-<script src="js/app.js"></script>
-<script>
-function switchTab(el) {
-  document.querySelectorAll('.order-btn > div').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  const target = el.dataset.tab;
-  document.querySelectorAll('.order-section').forEach(s => {
-    s.style.display = s.dataset.section === target ? 'block' : 'none';
-  });
-}
-</script>
+<script type="module" src="js/app.js"></script>
 </body>
 </html>

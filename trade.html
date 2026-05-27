@@ -14,21 +14,22 @@
   <div class="trade-container">
     <!-- Illustration -->
     <div class="illustration-section">
-      <div style="width:160px;height:160px;margin:0 auto;background:var(--bg-card);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:64px;">📊</div>
+      <img src="images/trade_illustration.png" alt="Trade Illustration" style="width: 100%; max-width: 800px; height: auto; background: var(--bg-card); border: 1px solid var(--border-glass); padding: 8px; box-shadow: var(--shadow-sm); border-radius: 20px;">
     </div>
+
 
     <!-- Account Info -->
     <div class="account-info-section">
-      <div class="info-item"><span class="label">Account Balance:</span><span class="value">4,250.00 USDT</span></div>
-      <div class="info-item"><span class="label">Completed number:</span><span class="value">15</span></div>
-      <div class="info-item"><span class="label">Total task:</span><span class="value">40</span></div>
-      <div class="info-item"><span class="label">Expected return:</span><span class="value">0.69%</span></div>
-      <div class="info-item"><span class="label">Today's benefits:</span><span class="value">85.50 USDT</span></div>
+      <div class="info-item"><span class="label">Account Balance:</span><span class="value" id="tradeBalanceVal">4,250.00 USDT</span></div>
+      <div class="info-item"><span class="label">Completed number:</span><span class="value" id="tradeCompletedNum">15</span></div>
+      <div class="info-item"><span class="label">Total task:</span><span class="value" id="tradeTotalTask">40</span></div>
+      <div class="info-item"><span class="label">Expected return:</span><span class="value" id="tradeExpectedReturnVal">0.69%</span></div>
+      <div class="info-item"><span class="label">Today's benefits:</span><span class="value" id="tradeBenefitsVal">85.50 USDT</span></div>
     </div>
 
     <!-- Start Button -->
     <div class="action-section">
-      <button class="start-matching-btn" onclick="alert('Matching...')">Start matching</button>
+      <button id="startMatchingBtn" class="start-matching-btn" onclick="startMatching()">START MATCHING</button>
     </div>
 
     <!-- Introduction -->
@@ -39,17 +40,80 @@
       </div>
     </div>
   </div>
+
+  <!-- Toasts Notifications -->
+  <div class="success-toast" id="successToast" style="display:none; position:fixed; top: 16px; left:50%; transform:translateX(-50%); background:#e1f3d8; border:1px solid #f3f9f1; color:#67c23a; padding:10px 20px; border-radius:8px; font-size:13px; font-weight:600; z-index:9999; align-items:center; gap:8px; box-shadow:0 4px 12px rgba(103,194,58,0.25);">
+    <span style="font-size:14px; background:#67c23a; color:#fff; border-radius:50%; width:16px; height:16px; display:inline-flex; align-items:center; justify-content:center;">✔</span> Successful transactions
+  </div>
+
+  <div class="error-toast" id="errorToast" style="display:none; position:fixed; top: 16px; left:50%; transform:translateX(-50%); background:#fef0f0; border:1px solid #fde2e2; color:#f56c6c; padding:10px 20px; border-radius:8px; font-size:13px; font-weight:600; z-index:9999; align-items:center; gap:8px; box-shadow:0 4px 12px rgba(245,108,108,0.25);">
+    <span style="font-size:14px; background:#f56c6c; color:#fff; border-radius:50%; width:16px; height:16px; display:inline-flex; align-items:center; justify-content:center;">✖</span> Transaction unsuccessful
+  </div>
+
+  <!-- Insufficient Balance Dialog (Exact Screenshot Clone) -->
+  <div class="dialog-overlay" id="insufficientBalanceDialog">
+    <div class="dialog-box insufficient-dialog">
+      <div class="insufficient-header">
+        <span class="bag-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#E97137"/><path d="M12 6V18M12 6H9M12 6H15M12 11H8M12 11H16M12 11C10.5 11 9.5 12 9.5 14M12 11C13.5 11 14.5 12 14.5 14" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></span>
+        <span class="header-title">Insufficient balance, please recharge first</span>
+      </div>
+      <div class="difference-info">
+        <div class="diff-amount" id="insufficientDiffVal">Difference 1.00 USDT</div>
+        <div class="diff-subtitle">Whether to recharge</div>
+      </div>
+      
+      <div class="required-row">
+        <span class="req-label">Minimum balance required</span>
+        <span class="req-value" id="insufficientReqVal">1.00 USDT</span>
+      </div>
+      
+      <div class="dialog-actions">
+        <button class="btn btn-cancel" onclick="closeDialog('insufficientBalanceDialog')">Cancel</button>
+        <button class="btn btn-confirm" onclick="window.location.href='recharge.html'">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Matched Order Dialog (Attachment 1 Clone) -->
+  <div class="dialog-overlay" id="matchedOrderDialog">
+    <div class="dialog-box matched-dialog" style="width: calc(100% - 32px); max-width: 440px; padding: 20px; text-align: left; background: var(--bg-card); border-radius: 16px; border: 1px solid var(--border-glass);">
+      <div style="display: flex; justify-content: space-between; gap: 12px; margin-bottom: 12px;">
+        <div style="flex: 1;">
+          <div id="matchedProductTitle" style="font-size: 13px; font-weight: 700; color: var(--text-primary); line-height: 1.4; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-family: var(--font-family);">Product Title Here</div>
+          <div id="matchedProductPrice" style="font-size: 15px; font-weight: 700; color: var(--accent); font-family: 'Inter', monospace;">$0.05</div>
+        </div>
+        <div style="flex-shrink: 0; display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 13px; color: #39a0c1; font-weight: 600; font-family: 'Inter', monospace;">x1</span>
+          <div id="matchedProductImage" style="width: 58px; height: 58px; background: var(--bg-input); border-radius: 10px; border: 1px solid var(--border-glass); display: flex; align-items: center; justify-content: center; padding: 4px; color: var(--accent);">
+            <!-- SVG injected dynamically -->
+          </div>
+        </div>
+      </div>
+      
+      <div style="border-bottom: 1px dashed var(--border-glass); margin: 12px 0;"></div>
+      
+      <div style="font-size: 12px; color: var(--text-secondary); line-height: 2;">
+        <div style="display: flex; justify-content: space-between;"><span>Amount</span><span id="matchedAmount" style="color: var(--text-primary); font-weight: 600; font-family: 'Inter', monospace;">0.05</span></div>
+        <div style="display: flex; justify-content: space-between;"><span>Expected return</span><span id="matchedExpectedReturn" style="color: #39a0c1; font-weight: 600; font-family: 'Inter', monospace;">0.00</span></div>
+        <div style="display: flex; justify-content: space-between;"><span>Current task number</span><span id="matchedTaskNumber" style="color: var(--text-primary); font-weight: 500; font-family: 'Inter', monospace;">1</span></div>
+        <div style="display: flex; justify-content: space-between;"><span>Transaction hour</span><span id="matchedTime" style="color: var(--text-primary); font-weight: 500; font-family: 'Inter', monospace;">2026-05-24 11:45:00</span></div>
+      </div>
+      
+      <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px;">
+        <button class="btn-primary" onclick="executeStartTrading()" style="padding: 13px; font-size: 14px; font-weight: 600; border-radius: 12px;">Start trading</button>
+        <button class="btn btn-cancel" onclick="executeCancelTrading()" style="padding: 13px; width: 100%; border-radius: 12px; font-size: 14px; background: var(--bg-input); border: none; color: var(--text-muted); cursor: pointer; transition: all 0.2s; text-align: center; font-weight: 600;">Cancel</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <nav class="bottom-nav">
-  <a href="home.html" class="nav-item" data-page="home"><span class="nav-icon">🏠</span><span>Index</span></a>
-  <a href="orders.html" class="nav-item" data-page="orders"><span class="nav-icon">📋</span><span>Order</span></a>
-  <a href="recharge.html" class="nav-item" data-page="recharge"><span class="nav-icon">💰</span><span>Recharge</span></a>
-  <a href="promotion.html" class="nav-item" data-page="promotion"><span class="nav-icon">📢</span><span>Promotion</span></a>
-  <a href="trade.html" class="nav-item" data-page="trade"><span class="nav-icon">💼</span><span>Trade</span></a>
-  <a href="team.html" class="nav-item" data-page="team"><span class="nav-icon">👥</span><span>Team</span></a>
-  <a href="profile.html" class="nav-item" data-page="profile"><span class="nav-icon">👤</span><span>Personal</span></a>
+  <a href="home.html" class="nav-item" data-page="home"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span><span>Index</span></a>
+  <a href="orders.html" class="nav-item" data-page="orders"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span><span>Order</span></a>
+  <a href="trade.html" class="nav-item" data-page="trade"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span><span>Trade</span></a>
+  <a href="team.html" class="nav-item" data-page="team"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span>Team</span></a>
+  <a href="profile.html" class="nav-item" data-page="profile"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span>Personal</span></a>
 </nav>
-<script src="js/app.js"></script>
+<script type="module" src="js/app.js"></script>
 </body>
 </html>
