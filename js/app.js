@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   // For login and register pages, skip Firestore data load
   if (currentPage === 'login' || currentPage === 'register') {
-    if (currentPage === 'register' && window.generateNewCaptcha) window.generateNewCaptcha();
+    if (window.generateNewCaptcha) window.generateNewCaptcha();
     return;
   }
 
