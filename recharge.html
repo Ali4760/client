@@ -18,30 +18,48 @@
       </select>
     </div>
  
+    <!-- Network / Address Type Selector -->
     <div class="form-group">
-      <label class="form-label">Select the protocol to use</label>
-      <select class="form-select" id="rechargeProtocol">
-        <option>TRC-20</option>
-        <option>ERC-20</option>
-        <option>BRC-20</option>
-      </select>
+      <label class="form-label" style="margin-bottom:8px; display:block;">Select Network</label>
+      <div id="walletNetworkBtns" style="display:flex; flex-wrap:wrap; gap:8px;">
+        <div style="color:var(--text-muted); font-size:13px;">Loading networks...</div>
+      </div>
     </div>
  
+    <!-- Selected Wallet Address Display -->
+    <div id="walletAddressDisplay" style="display:none; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:16px; margin-bottom:16px;">
+      <div style="font-size:12px; color:var(--text-muted); margin-bottom:6px;">
+        Deposit Address (<span id="selectedNetworkLabel">TRC-20</span>)
+      </div>
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+        <div id="selectedWalletAddress" style="flex:1; font-family:monospace; font-size:13px; color:var(--text); word-break:break-all; line-height:1.5;">
+          —
+        </div>
+        <button type="button" onclick="copySelectedAddress()" style="flex-shrink:0; border:1px solid var(--accent); background:rgba(113, 194, 209, 0.15); color:var(--accent); padding:8px 14px; border-radius:6px; cursor:pointer; font-size:12px; font-weight:600;">
+          📋 Copy
+        </button>
+      </div>
+
+      <!-- QR Code placeholder -->
+      <div id="walletQRCode" style="width:140px; height:140px; margin:0 auto; background:rgba(255,255,255,0.08); border-radius:8px; display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:12px; text-align:center;">
+        QR Code<br>(optional)
+      </div>
+    </div>
+
     <div class="form-group">
       <label class="form-label">Deposit amount</label>
       <input type="number" class="form-input" id="rechargeAmount" placeholder="Deposit amount must be greater than 0.1 USDT">
-    </div>
- 
-    <div class="deposit-address">
-      <div class="form-label">The deposit address only supports TRC20-USDT</div>
-      <div class="address-text" id="depositAddress">TRx7NqFh8Z2kYJg5K9p4YzD2mVwBcQrE8L</div>
-      <button class="copy-btn" onclick="copyDepositAddress()">Click to copy</button>
     </div>
  
     <button class="btn-primary" onclick="submitRechargeRequest()">Deposit now</button>
 
     <div style="text-align:center;margin-top:16px;">
       <a href="recharge-record.html" style="color:var(--accent);font-size:13px;">View recharge record →</a>
+    </div>
+
+    <!-- Warning notice -->
+    <div style="margin-top:20px; background:rgba(230, 162, 70, 0.1); border:1px solid rgba(230, 162, 70, 0.3); border-radius:6px; padding:12px 14px; font-size:12px; color:#e6a23c; line-height:1.7;">
+      ⚠️ Please send only USDT to this address using the correct network. Sending other assets or using the wrong network may result in permanent loss.
     </div>
 
     <div style="text-align:center;margin-top:12px;font-size:12px;color:var(--text-muted);">
