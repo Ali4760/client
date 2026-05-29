@@ -1737,6 +1737,70 @@ window.copyDepositAddress = function() {
 window.rechargeMinAmount = 10.00;
 window.rechargeStatus = false; // defaults to false/disabled initially for safety
 
+window.useDefaultRechargeSettings = function() {
+  const currencyOpt = document.getElementById('selectedCurrencyOpt');
+  const protocolOpt = document.getElementById('selectedProtocolOpt');
+  const addressEl = document.getElementById('depositAddress');
+  const minTextEl = document.getElementById('minAmountText');
+  const amountInput = document.getElementById('rechargeAmount');
+  const copyBtn = document.getElementById('copyAddressBtn');
+  const submitBtn = document.getElementById('submitRechargeBtn');
+  const alertEl = document.getElementById('maintenanceAlert');
+  const depositProtocolText = document.getElementById('depositProtocolText');
+  const depositCurrencyText = document.getElementById('depositCurrencyText');
+  const rechargeCurrencySelect = document.getElementById('rechargeCurrency');
+  const rechargeProtocolSelect = document.getElementById('rechargeProtocol');
+
+  window.rechargeMinAmount = 10.00;
+  window.rechargeStatus = true; // default to active on fallback
+
+  if (currencyOpt) {
+    currencyOpt.value = 'USDT';
+    currencyOpt.textContent = 'USDT';
+  }
+  if (protocolOpt) {
+    protocolOpt.value = 'TRC-20';
+    protocolOpt.textContent = 'TRC-20';
+  }
+  
+  if (rechargeCurrencySelect) {
+    rechargeCurrencySelect.innerHTML = `<option value="USDT">USDT</option>`;
+  }
+  if (rechargeProtocolSelect) {
+    rechargeProtocolSelect.innerHTML = `<option value="TRC-20">TRC-20</option>`;
+  }
+
+  if (addressEl) {
+    addressEl.textContent = 'TRx7NqFh8Z2kYJg5K9p4YzD2mVwBcQrE8L';
+    addressEl.style.opacity = '1';
+  }
+  
+  if (depositProtocolText) depositProtocolText.textContent = 'TRC-20';
+  if (depositCurrencyText) depositCurrencyText.textContent = 'USDT';
+
+  if (minTextEl) {
+    minTextEl.textContent = '10.00 USDT';
+  }
+
+  if (amountInput) {
+    amountInput.placeholder = 'Deposit amount must be greater than 10.00 USDT';
+    amountInput.removeAttribute('disabled');
+    amountInput.style.backgroundColor = '';
+  }
+
+  if (alertEl) alertEl.style.display = 'none';
+  if (copyBtn) {
+    copyBtn.removeAttribute('disabled');
+    copyBtn.style.opacity = '1';
+    copyBtn.style.cursor = 'pointer';
+  }
+  if (submitBtn) {
+    submitBtn.removeAttribute('disabled');
+    submitBtn.style.opacity = '1';
+    submitBtn.style.cursor = 'pointer';
+  }
+};
+
 window.initDynamicRechargeSettings = function() {
   const currencyOpt = document.getElementById('selectedCurrencyOpt');
   const protocolOpt = document.getElementById('selectedProtocolOpt');
@@ -1839,6 +1903,9 @@ window.initDynamicRechargeSettings = function() {
     } catch (e) {
       console.error('Error handling platform recharge wallet snapshot:', e);
     }
+  }, (error) => {
+    console.error('Firestore onSnapshot permission/network error on platform_settings/recharge_wallet. Using safe fallbacks.', error);
+    window.useDefaultRechargeSettings();
   });
 };
 
