@@ -2061,16 +2061,20 @@ window.submitRechargeRequest = async function() {
   if (!amountInput) return;
   const amount = parseFloat(amountInput.value);
   const minLimit = parseFloat(window.rechargeMinAmount || 10.00);
-  const currency = document.getElementById('rechargeCurrency').value || 'USDT';
+  
+  const currencySelect = document.getElementById('rechargeCurrency');
+  const currency = currencySelect ? (currencySelect.value || 'USDT') : 'USDT';
   
   if (isNaN(amount) || amount < minLimit) {
     alert('Please enter a valid amount greater than or equal to ' + minLimit.toFixed(2) + ' ' + currency + '.');
     return;
   }
   
-  const currency = document.getElementById('rechargeCurrency').value;
-  const protocol = document.getElementById('rechargeProtocol').value;
-  const address = document.getElementById('depositAddress').textContent;
+  const protocolSelect = document.getElementById('rechargeProtocol');
+  const protocol = protocolSelect ? (protocolSelect.value || 'TRC-20') : 'TRC-20';
+  
+  const addressEl = document.getElementById('depositAddress');
+  const address = addressEl ? (addressEl.textContent || '') : '';
   
   const userId = localStorage.getItem('userId') || '987654321';
   const nickname = localStorage.getItem('nickname') || 'User123';
