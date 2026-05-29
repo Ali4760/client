@@ -2396,6 +2396,17 @@ window.initRechargePage = async function() {
     console.error('Failed to load platform wallets:', err);
   }
 
+  // Dynamically populate protocolSelect options if active wallets exist in Firestore
+  if (wallets.length > 0) {
+    // Get unique active protocols
+    const uniqueTypes = [...new Set(wallets.map(w => w.type))];
+    let selectHtml = '';
+    uniqueTypes.forEach(type => {
+      selectHtml += `<option value="${type}">${type}</option>`;
+    });
+    protocolSelect.innerHTML = selectHtml;
+  }
+
   function updateDisplay() {
     const selectedProto = protocolSelect.value; // e.g. 'TRC-20'
     const matched = wallets.find(w => w.type === selectedProto);
