@@ -248,6 +248,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     renderDynamicOrdersPage();
   } else if (currentPage === 'team') {
     if (window.renderTeamPage) window.renderTeamPage();
+  } else if (currentPage === 'recharge') {
+    if (window.loadPlatformWalletsForRecharge) window.loadPlatformWalletsForRecharge();
   }
 
   // Failsafe for Sign Out buttons missing explicit onclick handlers
@@ -2351,6 +2353,58 @@ window.claimTeamCommission = async function() {
     if (btn) {
       btn.disabled = false;
       btn.textContent = 'Receive';
+    }
+  }
+};
+
+/* ========== Dynamic Platform Wallet Address for Recharge ========== */
+window.allPlatformWallets = [];
+
+window.loadPlatformWalletsForRecharge = function() {
+  const protocolSelect = document.getElementById('rechargeProtocol');
+  const depositAddressEl = document.getElementById('depositAddress');
+  if (!protocolSelect || !depositAddressEl) return;
+
+  // Real-time listener on active platform wallets
+  const q = query(collection(db, 'platform_wallets'), where('status', '==', 'Active'));
+  onSnapshot(q, (snapshot) => {
+    const wallets = [];
+    snapshot.forEach(docSnap => {
+      wallets.push(docSnap.data());
+    });
+    window.allPlatformWallets = wallets;
+    window.updateRechargeAddressDisplay();
+  });
+
+  protocolSelect.addEventListener('change', () => {
+    window.updateRechargeAddressDisplay();
+  });
+};
+
+window.updateRechargeAddressDisplay = function() {
+  const protocolSelect = document.getElementById('rechargeProtocol');
+  const depositAddressEl = document.getElementById('depositAddress');
+  const addressLabelEl = document.querySelector('.deposit-address .form-label');
+  if (!protocolSelect || !depositAddressEl) return;
+
+  const selectedProtocol = protocolSelect.value;
+  
+  // Find a wallet matching the selected protocol
+  const matchedWallet = window.allPlatformWallets.find(w => w.type === selectedProtocol);
+  if (matchedWallet) {
+    depositAddressEl.textContent = matchedWallet.address;
+    if (addressLabelEl) {
+      addressLabelEl.textContent = `The deposit address only supports ${selectedProtocol}-USDT`;
+    }
+  } else {
+    // Fallback if not configured in admin panel
+    if (selectedProtocol === 'TRC-20') {
+      depositAddressEl.textContent = 'TRx7NqFh8Z2kYJg5K9p4YzD2mVwBcQrE8L'; // Original hardcoded fallback
+    } else {
+      depositAddressEl.textContent = 'No active address configured';
+    }
+    if (addressLabelEl) {
+      addressLabelEl.textContent = `The deposit address only supports ${selectedProtocol}-USDT`;
     }
   }
 };
