@@ -242,14 +242,14 @@ document.addEventListener('DOMContentLoaded', async function() {
   // Dynamic records list rendering
   if (currentPage === 'recharge-record') {
     renderRechargeRecords();
+  } else if (currentPage === 'recharge') {
+    window.initDynamicRechargeSettings();
   } else if (currentPage === 'withdraw-record') {
     renderWithdrawRecords();
   } else if (currentPage === 'orders') {
     renderDynamicOrdersPage();
   } else if (currentPage === 'team') {
     if (window.renderTeamPage) window.renderTeamPage();
-  } else if (currentPage === 'recharge') {
-    window.initRechargePage();
   }
 
   // Failsafe for Sign Out buttons missing explicit onclick handlers
@@ -1733,6 +1733,115 @@ window.copyDepositAddress = function() {
   });
 };
 
+/* ========== Dynamic Recharge Wallet Listener ========== */
+window.rechargeMinAmount = 10.00;
+window.rechargeStatus = false; // defaults to false/disabled initially for safety
+
+window.initDynamicRechargeSettings = function() {
+  const currencyOpt = document.getElementById('selectedCurrencyOpt');
+  const protocolOpt = document.getElementById('selectedProtocolOpt');
+  const addressEl = document.getElementById('depositAddress');
+  const minTextEl = document.getElementById('minAmountText');
+  const amountInput = document.getElementById('rechargeAmount');
+  const copyBtn = document.getElementById('copyAddressBtn');
+  const submitBtn = document.getElementById('submitRechargeBtn');
+  const alertEl = document.getElementById('maintenanceAlert');
+  const depositProtocolText = document.getElementById('depositProtocolText');
+  const depositCurrencyText = document.getElementById('depositCurrencyText');
+  const rechargeCurrencySelect = document.getElementById('rechargeCurrency');
+  const rechargeProtocolSelect = document.getElementById('rechargeProtocol');
+
+  onSnapshot(doc(db, 'platform_settings', 'recharge_wallet'), (docSnap) => {
+    try {
+      const data = docSnap.exists() ? docSnap.data() : {
+        currency: 'USDT',
+        protocol: 'TRC-20',
+        walletAddress: 'TRx7NqFh8Z2kYJg5K9p4YzD2mVwBcQrE8L',
+        minRechargeAmount: 10.00,
+        status: true
+      };
+
+      const minVal = parseFloat(data.minRechargeAmount || 10.00);
+      window.rechargeMinAmount = minVal;
+      window.rechargeStatus = !!data.status;
+
+      // Update options and values
+      if (currencyOpt) {
+        currencyOpt.value = data.currency || 'USDT';
+        currencyOpt.textContent = data.currency || 'USDT';
+      }
+      if (protocolOpt) {
+        protocolOpt.value = data.protocol || 'TRC-20';
+        protocolOpt.textContent = data.protocol || 'TRC-20';
+      }
+      
+      if (rechargeCurrencySelect) {
+        // Clear children and add the single active option
+        rechargeCurrencySelect.innerHTML = `<option value="${data.currency || 'USDT'}">${data.currency || 'USDT'}</option>`;
+      }
+      if (rechargeProtocolSelect) {
+        // Clear children and add the single active option
+        rechargeProtocolSelect.innerHTML = `<option value="${data.protocol || 'TRC-20'}">${data.protocol || 'TRC-20'}</option>`;
+      }
+
+      if (addressEl) {
+        addressEl.textContent = data.walletAddress || '';
+        addressEl.style.opacity = '1';
+      }
+      
+      if (depositProtocolText) depositProtocolText.textContent = data.protocol || 'TRC-20';
+      if (depositCurrencyText) depositCurrencyText.textContent = data.currency || 'USDT';
+
+      if (minTextEl) {
+        minTextEl.textContent = minVal.toFixed(2) + ' ' + (data.currency || 'USDT');
+      }
+
+      if (amountInput) {
+        amountInput.placeholder = 'Deposit amount must be greater than ' + minVal.toFixed(2) + ' ' + (data.currency || 'USDT');
+      }
+
+      // Check Maintenance Mode
+      if (data.status) {
+        // Active
+        if (alertEl) alertEl.style.display = 'none';
+        if (copyBtn) {
+          copyBtn.removeAttribute('disabled');
+          copyBtn.style.opacity = '1';
+          copyBtn.style.cursor = 'pointer';
+        }
+        if (submitBtn) {
+          submitBtn.removeAttribute('disabled');
+          submitBtn.style.opacity = '1';
+          submitBtn.style.cursor = 'pointer';
+        }
+        if (amountInput) {
+          amountInput.removeAttribute('disabled');
+          amountInput.style.backgroundColor = '';
+        }
+      } else {
+        // Maintenance Mode
+        if (alertEl) alertEl.style.display = 'block';
+        if (copyBtn) {
+          copyBtn.setAttribute('disabled', 'true');
+          copyBtn.style.opacity = '0.5';
+          copyBtn.style.cursor = 'not-allowed';
+        }
+        if (submitBtn) {
+          submitBtn.setAttribute('disabled', 'true');
+          submitBtn.style.opacity = '0.5';
+          submitBtn.style.cursor = 'not-allowed';
+        }
+        if (amountInput) {
+          amountInput.setAttribute('disabled', 'true');
+          amountInput.style.backgroundColor = '#f5f5f5';
+        }
+      }
+    } catch (e) {
+      console.error('Error handling platform recharge wallet snapshot:', e);
+    }
+  });
+};
+
 /* ========== User Info Dialog Update Handlers ========== */
 window.updateNickname = async function() {
   const input = document.getElementById('inputNewNickname');
@@ -1876,11 +1985,19 @@ window.updateWithdrawAddress = async function() {
 
 /* ========== Recharge Submission ========== */
 window.submitRechargeRequest = async function() {
+  if (window.rechargeStatus === false) {
+    alert('Recharge is currently under maintenance. Please try again later.');
+    return;
+  }
+
   const amountInput = document.getElementById('rechargeAmount');
   if (!amountInput) return;
   const amount = parseFloat(amountInput.value);
-  if (isNaN(amount) || amount <= 0.1) {
-    alert('Please enter a valid amount greater than 0.1 USDT.');
+  const minLimit = parseFloat(window.rechargeMinAmount || 10.00);
+  const currency = document.getElementById('rechargeCurrency').value || 'USDT';
+  
+  if (isNaN(amount) || amount < minLimit) {
+    alert('Please enter a valid amount greater than or equal to ' + minLimit.toFixed(2) + ' ' + currency + '.');
     return;
   }
   
@@ -2375,64 +2492,3 @@ window.renderUserData = renderUserData;
 window.safeGetAssignedTasks = safeGetAssignedTasks;
 window.fetchAssignedTasksFromFirestore = fetchAssignedTasksFromFirestore;
 window.loadCurrentUserFromFirestore = loadCurrentUserFromFirestore;
-
-/* ========== Recharge Page Dynamic Platform Wallet Sync ========== */
-window.initRechargePage = async function() {
-  const protocolSelect = document.getElementById('rechargeProtocol');
-  const depositAddressEl = document.getElementById('depositAddress');
-  const labelEl = document.getElementById('depositProtocolLabel') || document.querySelector('.deposit-address .form-label');
-
-  if (!protocolSelect || !depositAddressEl) return;
-
-  let wallets = [];
-
-  try {
-    const q = query(collection(db, 'platform_wallets'), where('status', '==', 'Active'));
-    const snapshot = await getDocs(q);
-    snapshot.forEach(docSnap => {
-      wallets.push(docSnap.data());
-    });
-  } catch (err) {
-    console.error('Failed to load platform wallets:', err);
-  }
-
-  // Dynamically populate protocolSelect options if active wallets exist in Firestore
-  if (wallets.length > 0) {
-    // Get unique active protocols
-    const uniqueTypes = [...new Set(wallets.map(w => w.type))];
-    let selectHtml = '';
-    uniqueTypes.forEach(type => {
-      selectHtml += `<option value="${type}">${type}</option>`;
-    });
-    protocolSelect.innerHTML = selectHtml;
-  }
-
-  function updateDisplay() {
-    const selectedProto = protocolSelect.value; // e.g. 'TRC-20'
-    const matched = wallets.find(w => w.type === selectedProto);
-    if (matched) {
-      depositAddressEl.textContent = matched.address;
-      if (labelEl) {
-        labelEl.textContent = `The deposit address only supports ${selectedProto}-USDT`;
-      }
-    } else {
-      // Fallback
-      if (selectedProto === 'TRC-20') {
-        depositAddressEl.textContent = 'TRx7NqFh8Z2kYJg5K9p4YzD2mVwBcQrE8L';
-      } else if (selectedProto === 'ERC-20') {
-        depositAddressEl.textContent = '0x71C7656EC7ab88b098defB751B7401B5f6d8976F';
-      } else {
-        depositAddressEl.textContent = '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa';
-      }
-      if (labelEl) {
-        labelEl.textContent = `The deposit address only supports ${selectedProto}-USDT`;
-      }
-    }
-  }
-
-  // Handle change
-  protocolSelect.addEventListener('change', updateDisplay);
-
-  // Initial display
-  updateDisplay();
-};
