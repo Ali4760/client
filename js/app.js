@@ -248,8 +248,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     renderDynamicOrdersPage();
   } else if (currentPage === 'team') {
     if (window.renderTeamPage) window.renderTeamPage();
-  } else if (currentPage === 'recharge') {
-    initWalletAddressListener();
   }
 
   // Failsafe for Sign Out buttons missing explicit onclick handlers
@@ -1628,7 +1626,7 @@ window.renderDynamicOrdersPage = function() {
         html += `
           <div class="order-card" style="background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: 14px; padding: 16px; margin: 12px 16px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 12px; animation: fadeInUp 0.4s ease-out;">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--border-glass); padding-bottom: 8px;">
-              <span style="font-size: 11px; color: var(--text-muted); font-family: 'Inter', monospace;">Order: ${escapeHtml(task.id)}</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: 'Inter', monospace;">Order: ${task.id}</span>
               <span style="font-size: 11px; padding: 3px 8px; border-radius: 6px; font-weight: 600; background: rgba(144, 147, 153, 0.1); color: var(--text-muted);">Waiting</span>
             </div>
             <div style="display: flex; gap: 12px; align-items: flex-start;">
@@ -1636,8 +1634,8 @@ window.renderDynamicOrdersPage = function() {
                 ${productImgHtml}
               </div>
               <div style="flex: 1;">
-                <div style="font-size: 12.5px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4;">${escapeHtml(product.title)}</div>
-                <div style="font-size: 11px; color: var(--text-muted);">${escapeHtml(task.time)}</div>
+                <div style="font-size: 12.5px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4;">${product.title}</div>
+                <div style="font-size: 11px; color: var(--text-muted);">${task.time}</div>
               </div>
             </div>
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding-top: 8px; text-align: center; border-top: 1px solid var(--border-glass); font-size: 11px; color: var(--text-secondary);">
@@ -1675,7 +1673,7 @@ window.renderDynamicOrdersPage = function() {
         html += `
           <div class="order-card" style="background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: 14px; padding: 16px; margin: 12px 16px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 12px; animation: fadeInUp 0.4s ease-out;">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--border-glass); padding-bottom: 8px;">
-              <span style="font-size: 11px; color: var(--text-muted); font-family: 'Inter', monospace;">Order: ${escapeHtml(task.id)}</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: 'Inter', monospace;">Order: ${task.id}</span>
               <span style="font-size: 11px; padding: 3px 8px; border-radius: 6px; font-weight: 600; background: rgba(62, 154, 137, 0.1); color: var(--success);">Finish</span>
             </div>
             <div style="display: flex; gap: 12px; align-items: flex-start;">
@@ -1683,8 +1681,8 @@ window.renderDynamicOrdersPage = function() {
                 ${productImgHtml}
               </div>
               <div style="flex: 1;">
-                <div style="font-size: 12.5px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4;">${escapeHtml(productTitle)}</div>
-                <div style="font-size: 11px; color: var(--text-muted);">${escapeHtml(task.time)}</div>
+                <div style="font-size: 12.5px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4;">${productTitle}</div>
+                <div style="font-size: 11px; color: var(--text-muted);">${task.time}</div>
               </div>
             </div>
             <div style="grid-template-columns: repeat(3, 1fr); gap: 8px; padding-top: 8px; text-align: center; border-top: 1px solid var(--border-glass); font-size: 11px; color: var(--text-secondary); display: grid;">
@@ -1877,9 +1875,9 @@ window.submitRechargeRequest = async function() {
     return;
   }
   
-  const currency = document.getElementById('rechargeCurrency') ? document.getElementById('rechargeCurrency').value : 'USDT';
-  const protocol = document.getElementById('selectedNetworkLabel') ? document.getElementById('selectedNetworkLabel').textContent : 'TRC-20';
-  const address = document.getElementById('selectedWalletAddress') ? document.getElementById('selectedWalletAddress').textContent : '';
+  const currency = document.getElementById('rechargeCurrency').value;
+  const protocol = document.getElementById('rechargeProtocol').value;
+  const address = document.getElementById('depositAddress').textContent;
   
   const userId = localStorage.getItem('userId') || '987654321';
   const nickname = localStorage.getItem('nickname') || 'User123';
@@ -2085,7 +2083,7 @@ window.renderRechargeRecords = function() {
           </div>
           <div class="record-row">
             <span class="label">Time</span>
-            <span class="value">${escapeHtml(req.time)}</span>
+            <span class="value">${req.time}</span>
           </div>
         </div>
       `;
@@ -2147,7 +2145,7 @@ window.renderWithdrawRecords = function() {
           </div>
           <div class="record-row">
             <span class="label">Time</span>
-            <span class="value">${escapeHtml(req.time)}</span>
+            <span class="value">${req.time}</span>
           </div>
         </div>
       `;
@@ -2263,7 +2261,7 @@ window.renderTeamPage = async function() {
 
       html += `
         <div class="member-row">
-          <div class="member-cell user-col"><span class="username">${escapeHtml(maskedPhone)}</span></div>
+          <div class="member-cell user-col"><span class="username">${maskedPhone}</span></div>
           <div class="member-cell contribution-col"><span class="contribution">$${subordinateContribution.toFixed(2)}</span></div>
           <div class="member-cell state-col"><span class="state ${stateClass}">${stateText}</span></div>
         </div>
@@ -2368,99 +2366,3 @@ window.renderUserData = renderUserData;
 window.safeGetAssignedTasks = safeGetAssignedTasks;
 window.fetchAssignedTasksFromFirestore = fetchAssignedTasksFromFirestore;
 window.loadCurrentUserFromFirestore = loadCurrentUserFromFirestore;
-
-let rechargeWalletAddresses = []; // cached from Firestore
-let selectedWalletEntry = null;
-
-function showConsumerToast(msg) {
-  if (window.alert) {
-    window.alert(msg);
-  } else {
-    alert(msg);
-  }
-}
-
-function initWalletAddressListener() {
-  onSnapshot(doc(db, 'config', 'platformWallet'), (snapshot) => {
-    rechargeWalletAddresses = (snapshot.exists() && snapshot.data()) ? (snapshot.data().addresses || []) : [];
-
-    const currentPage = document.body.dataset.page;
-    if (currentPage === 'recharge') {
-      renderRechargeNetworkButtons();
-    }
-  });
-}
-
-function renderRechargeNetworkButtons() {
-  const container = document.getElementById('walletNetworkBtns');
-  if (!container) return;
-
-  if (!rechargeWalletAddresses.length) {
-    container.innerHTML = `
-      <div style="color:#F56C6C; font-size:13px;">
-        No recharge addresses configured. Please contact support.
-      </div>`;
-    document.getElementById('walletAddressDisplay').style.display = 'none';
-    return;
-  }
-
-  container.innerHTML = rechargeWalletAddresses.map((addr, i) => `
-    <button
-      type="button"
-      onclick="selectWalletNetwork('${addr.id}')"
-      id="netBtn_${addr.id}"
-      style="padding:8px 16px; border-radius:20px; cursor:pointer;
-             font-size:13px; font-weight:600; transition:none;
-             border:2px solid ${i === 0 ? '#71c2d1' : 'rgba(255,255,255,0.15)'};
-             background:${i === 0 ? '#71c2d1' : 'transparent'};
-             color:${i === 0 ? '#fff' : 'var(--text-muted)'};">
-      ${addr.type}
-    </button>`).join('');
-
-  if (rechargeWalletAddresses.length > 0) {
-    selectWalletNetwork(rechargeWalletAddresses[0].id);
-  }
-}
-
-function selectWalletNetwork(addrId) {
-  selectedWalletEntry = rechargeWalletAddresses.find(a => a.id === addrId);
-  if (!selectedWalletEntry) return;
-
-  rechargeWalletAddresses.forEach(a => {
-    const btn = document.getElementById('netBtn_' + a.id);
-    if (!btn) return;
-    const isActive = a.id === addrId;
-    btn.style.background    = isActive ? '#71c2d1' : 'transparent';
-    btn.style.borderColor   = isActive ? '#71c2d1' : 'rgba(255,255,255,0.15)';
-    btn.style.color         = isActive ? '#fff'    : 'var(--text-muted)';
-  });
-
-  const displayEl = document.getElementById('walletAddressDisplay');
-  if (displayEl) displayEl.style.display = 'block';
-  
-  const labelEl = document.getElementById('selectedNetworkLabel');
-  if (labelEl) labelEl.textContent = selectedWalletEntry.type;
-  
-  const addressEl = document.getElementById('selectedWalletAddress');
-  if (addressEl) addressEl.textContent = selectedWalletEntry.address;
-}
-
-function copySelectedAddress() {
-  if (!selectedWalletEntry) return;
-  navigator.clipboard.writeText(selectedWalletEntry.address).then(() => {
-    showConsumerToast('📋 Address copied successfully!');
-  }).catch(() => {
-    const el = document.createElement('textarea');
-    el.value = selectedWalletEntry.address;
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
-    showConsumerToast('📋 Address copied successfully!');
-  });
-}
-
-window.initWalletAddressListener = initWalletAddressListener;
-window.renderRechargeNetworkButtons = renderRechargeNetworkButtons;
-window.selectWalletNetwork = selectWalletNetwork;
-window.copySelectedAddress = copySelectedAddress;
