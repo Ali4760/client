@@ -2378,22 +2378,29 @@ window.loadCurrentUserFromFirestore = loadCurrentUserFromFirestore;
 
 /* ========== Recharge Page Dynamic Platform Wallet Sync ========== */
 window.initRechargePage = async function() {
+  console.log('🔍 initRechargePage started!');
   const protocolSelect = document.getElementById('rechargeProtocol');
   const depositAddressEl = document.getElementById('depositAddress');
   const labelEl = document.getElementById('depositProtocolLabel') || document.querySelector('.deposit-address .form-label');
 
-  if (!protocolSelect || !depositAddressEl) return;
+  if (!protocolSelect || !depositAddressEl) {
+    console.warn('⚠️ Missing rechargeProtocol or depositAddress element on page');
+    return;
+  }
 
   let wallets = [];
 
   try {
     const q = query(collection(db, 'platform_wallets'), where('status', '==', 'Active'));
+    console.log('📡 Querying active platform wallets from Firestore...');
     const snapshot = await getDocs(q);
+    console.log('✅ Query completed, active wallets found:', snapshot.size);
     snapshot.forEach(docSnap => {
       wallets.push(docSnap.data());
     });
   } catch (err) {
-    console.error('Failed to load platform wallets:', err);
+    console.error('❌ Failed to load platform wallets:', err);
+    alert('🔔 Diagnostic Alert: Failed to query platform_wallets collection in Firestore. This is usually due to restrictive security rules. Error details: ' + err.message);
   }
 
   // Dynamically populate protocolSelect options if active wallets exist in Firestore
