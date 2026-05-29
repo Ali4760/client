@@ -11,40 +11,34 @@
   <div class="page-header"><span class="title">Recharge</span></div>
 
   <div class="recharge-form">
-    <!-- Maintenance Alert -->
-    <div id="maintenanceAlert" style="display: none; background: #FEF0F0; border: 1px solid #FDE2E2; color: #F56C6C; padding: 12px; border-radius: 8px; margin-bottom: 16px; font-size: 13px; text-align: center; font-weight: 500;">
-      ⚠️ Recharge is currently under maintenance. Please try again later.
-    </div>
-
     <div class="form-group">
       <label class="form-label">Currency selection</label>
-      <select class="form-select" id="rechargeCurrency" disabled>
-        <option id="selectedCurrencyOpt">Loading...</option>
+      <select class="form-select" id="rechargeCurrency">
+        <option>USDT</option>
       </select>
     </div>
  
     <div class="form-group">
       <label class="form-label">Select the protocol to use</label>
-      <select class="form-select" id="rechargeProtocol" disabled>
-        <option id="selectedProtocolOpt">Loading...</option>
+      <select class="form-select" id="rechargeProtocol">
+        <option>TRC-20</option>
+        <option>ERC-20</option>
+        <option>BRC-20</option>
       </select>
     </div>
  
     <div class="form-group">
       <label class="form-label">Deposit amount</label>
-      <input type="number" class="form-input" id="rechargeAmount" placeholder="Loading minimum limit..." disabled>
-      <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
-        Minimum deposit amount: <span id="minAmountText" style="font-weight: 600;">Loading...</span>
-      </div>
+      <input type="number" class="form-input" id="rechargeAmount" placeholder="Deposit amount must be greater than 0.1 USDT">
     </div>
  
     <div class="deposit-address">
-      <div class="form-label">The deposit address only supports <span id="depositProtocolText">Loading...</span>-<span id="depositCurrencyText">Loading...</span></div>
-      <div class="address-text" id="depositAddress" style="word-break: break-all; opacity: 0.6;">Loading wallet address...</div>
-      <button class="copy-btn" id="copyAddressBtn" onclick="copyDepositAddress()" disabled>Click to copy</button>
+      <div class="form-label">The deposit address only supports TRC20-USDT</div>
+      <div class="address-text" id="depositAddress">TRx7NqFh8Z2kYJg5K9p4YzD2mVwBcQrE8L</div>
+      <button class="copy-btn" onclick="copyDepositAddress()">Click to copy</button>
     </div>
  
-    <button class="btn-primary" id="submitRechargeBtn" onclick="submitRechargeRequest()" disabled>Deposit now</button>
+    <button class="btn-primary" onclick="submitRechargeRequest()">Deposit now</button>
 
     <div style="text-align:center;margin-top:16px;">
       <a href="recharge-record.html" style="color:var(--accent);font-size:13px;">View recharge record →</a>
@@ -63,6 +57,6 @@
   <a href="team.html" class="nav-item" data-page="team"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span>Team</span></a>
   <a href="profile.html" class="nav-item" data-page="profile"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span>Personal</span></a>
 </nav>
-<script type="module" src="js/app.js?v=2.0.2"></script>
+<script type="module" src="js/app.js"></script>
 </body>
 </html>
