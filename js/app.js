@@ -248,6 +248,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     renderDynamicOrdersPage();
   } else if (currentPage === 'team') {
     if (window.renderTeamPage) window.renderTeamPage();
+  } else if (currentPage === 'recharge') {
+    window.initRechargePage();
   }
 
   // Failsafe for Sign Out buttons missing explicit onclick handlers
@@ -2373,3 +2375,53 @@ window.renderUserData = renderUserData;
 window.safeGetAssignedTasks = safeGetAssignedTasks;
 window.fetchAssignedTasksFromFirestore = fetchAssignedTasksFromFirestore;
 window.loadCurrentUserFromFirestore = loadCurrentUserFromFirestore;
+
+/* ========== Recharge Page Dynamic Platform Wallet Sync ========== */
+window.initRechargePage = async function() {
+  const protocolSelect = document.getElementById('rechargeProtocol');
+  const depositAddressEl = document.getElementById('depositAddress');
+  const labelEl = document.getElementById('depositProtocolLabel') || document.querySelector('.deposit-address .form-label');
+
+  if (!protocolSelect || !depositAddressEl) return;
+
+  let wallets = [];
+
+  try {
+    const q = query(collection(db, 'platform_wallets'), where('status', '==', 'Active'));
+    const snapshot = await getDocs(q);
+    snapshot.forEach(docSnap => {
+      wallets.push(docSnap.data());
+    });
+  } catch (err) {
+    console.error('Failed to load platform wallets:', err);
+  }
+
+  function updateDisplay() {
+    const selectedProto = protocolSelect.value; // e.g. 'TRC-20'
+    const matched = wallets.find(w => w.type === selectedProto);
+    if (matched) {
+      depositAddressEl.textContent = matched.address;
+      if (labelEl) {
+        labelEl.textContent = `The deposit address only supports ${selectedProto}-USDT`;
+      }
+    } else {
+      // Fallback
+      if (selectedProto === 'TRC-20') {
+        depositAddressEl.textContent = 'TRx7NqFh8Z2kYJg5K9p4YzD2mVwBcQrE8L';
+      } else if (selectedProto === 'ERC-20') {
+        depositAddressEl.textContent = '0x71C7656EC7ab88b098defB751B7401B5f6d8976F';
+      } else {
+        depositAddressEl.textContent = '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa';
+      }
+      if (labelEl) {
+        labelEl.textContent = `The deposit address only supports ${selectedProto}-USDT`;
+      }
+    }
+  }
+
+  // Handle change
+  protocolSelect.addEventListener('change', updateDisplay);
+
+  // Initial display
+  updateDisplay();
+};
